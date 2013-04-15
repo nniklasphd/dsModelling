@@ -6,8 +6,11 @@ License: GPL-3
 Title: Datashield package for regression analyses
 Description: This package contains functions to carry out statistical
     various type of regression analyses.
+Depends:
+    nlme
 AggregateMethods: 
 AssignMethods: 
 Collate:
     'glm.ds.r'
     'gee.alphaphi.ds.r'
+    'gee.beta.ds.r'
