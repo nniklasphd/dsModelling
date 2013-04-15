@@ -10,3 +10,4 @@ AggregateMethods:
 AssignMethods: 
 Collate:
     'glm.ds.r'
+    'gee.alphaphi.ds.r'

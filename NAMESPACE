@@ -1,1 +1,2 @@
+export(gee.alphaphi.ds)
 export(glm.ds)
