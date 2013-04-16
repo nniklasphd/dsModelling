@@ -9,7 +9,7 @@ Description: This package contains functions to carry out statistical
 Depends:
     nlme
 AggregateMethods: glm.ds, gee.alphaphi.ds, gee.beta.ds
-AssignMethods: 
+AssignMethods: c=base::c
 Collate:
     'glm.ds.r'
     'gee.alphaphi.ds.r'
