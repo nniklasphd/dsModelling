@@ -8,9 +8,7 @@ Description: This package contains functions to carry out statistical
     various type of regression analyses.
 Depends:
     nlme
-AggregateMethods: glm.ds, gee.alphaphi.ds, gee.beta.ds
+AggregateMethods: glm.ds
 AssignMethods: c=base::c
 Collate:
     'glm.ds.r'
-    'gee.alphaphi.ds.r'
-    'gee.beta.ds.r'

@@ -1,3 +1,1 @@
-export(gee.alphaphi.ds)
-export(gee.beta.ds)
 export(glm.ds)
