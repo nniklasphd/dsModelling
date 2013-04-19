@@ -1,10 +1,11 @@
-#' Generalized linear model.
+#' Generalized linear modellling
 #'
-#' @title aasasas
+#' @title Fits a generalized linear model
 #'
-#' @param formula the formula
-#' @param family sdsd
-#' @param beta.vect dfsdfsdf
+#' @param formula an object of class \code{formula}
+#' @param family a description of the error distribution and link function to
+#' used in the model
+#' @param beta.vect starting values for the parameters in the linear predictor
 #' @export
 #'
 glm.ds <- function (formula, family, beta.vect=NULL) {
