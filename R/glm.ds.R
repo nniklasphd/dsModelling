@@ -1,12 +1,17 @@
 #' Generalized linear modellling
 #'
 #' @title Fits a generalized linear model
-#'
+#' @description THIS FUNCTION IS NOT USED ALONE, IT IS CALLED BY THE FUNCTION \code{ds.glm} FROM THE PACKAGE \code{dsmodellingclient}.
 #' @param formula an object of class \code{formula}
 #' @param family a description of the error distribution and link function to
 #' used in the model
 #' @param beta.vect starting values for the parameters in the linear predictor
+#' @return a list which contains: the fitted \code{family}, a score vector and an information matrix
+#' @author Burton, P.; Laflamme, P.; Gaye, A.
 #' @export
+#' @examples {
+#' # Please see the examples in the documentation of the function 'ds.glm' from the package 'dsmodellingclient'
+#' }
 #'
 glm.ds <- function (formula, family, beta.vect=NULL) {
 

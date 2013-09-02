@@ -1,14 +1,43 @@
 Package: dsmodelling
 Maintainer: <datashield@obiba.org>
 Author: <datashield@obiba.org>
-Version: 1.1
+Version: 1.4
 License: GPL-3
 Title: Datashield package for regression analyses
-Description: This package contains functions to carry out statistical
-    various type of regression analyses.
-Depends:
-    nlme
-AggregateMethods: glm.ds, c=base::c
-AssignMethods: c=base::c
+Description: This package contains function for statistical modelling
+AggregateMethods: glm.ds,
+    length=base::length,
+    colnames=base::colnames,
+    histogram.ds,
+    dim=base::dim,
+    quantilemean.ds,
+    mean.ds,
+    checkfactor.ds,
+    isNA.ds,
+    range.ds,
+    c=base::c,
+    t.test=stats::t.test,
+    var=stats::var,
+    is.null=base::is.null,
+    NROW=base::NROW
+    table.1d,
+    table.2d,
+    table1d.ds,
+    table2d.ds,
+    MinMax.ds,
+    densitygrid.ds,
+AssignMethods: log=base::log,
+    cbind=base::cbind,
+    exp=base::exp,
+    as.list=base::as.list,
+    as.numeric=base::as.numeric,
+    as.matrix=base::as.matrix,
+    complete.cases=stats::complete.cases,
+    data.frame=base::data.frame,
+    createfactor.ds,
+    subset=base::subset,
+    product.ds,
+    sum=base::sum,
+    as.null=base::as.null
 Collate:
-    'glm.ds.r'
+    'glm.ds.R'
