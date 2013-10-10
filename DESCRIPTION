@@ -1,7 +1,7 @@
 Package: dsmodelling
 Maintainer: <datashield@obiba.org>
 Author: <datashield@obiba.org>
-Version: 1.4
+Version: 2.0
 License: GPL-3
 Title: Datashield package for regression analyses
 Description: This package contains functions for statistical modelling.
