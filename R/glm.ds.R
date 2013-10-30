@@ -5,7 +5,9 @@
 #' @param formula an object of class \code{formula}
 #' @param family a description of the error distribution and link function to
 #' used in the model
-#' @param beta.vect starting values for the parameters in the linear predictor
+#' @param beta.vect a string character: the starting values for the parameters in the linear predictor.
+#' THE VALUES CONCATENATED INTO A STRING WITH ',' AS SPLITTING CHARACTER; the string is split within the 
+#' function and the values turned into numeric for use.
 #' @return a list which contains: the fitted \code{family}, a score vector and an information matrix
 #' @author Burton, P.; Laflamme, P.; Gaye, A.
 #' @export
@@ -21,6 +23,8 @@ glm.ds <- function (formula, family, beta.vect=NULL) {
 
   if(is.null(beta.vect)) {
     beta.vect <- rep(0,dim(X.mat)[2])
+  }else{
+    beta.vect <- as.numeric(unlist(strsplit(beta.vect, split=",")))
   }
 
   numsubs<-dim(X.mat)[1]

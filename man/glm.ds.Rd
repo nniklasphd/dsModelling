@@ -10,8 +10,11 @@
   \item{family}{a description of the error distribution and
   link function to used in the model}
 
-  \item{beta.vect}{starting values for the parameters in
-  the linear predictor}
+  \item{beta.vect}{a string character: the starting values
+  for the parameters in the linear predictor. THE VALUES
+  CONCATENATED INTO A STRING WITH ',' AS SPLITTING
+  CHARACTER; the string is split within the function and
+  the values turned into numeric for use.}
 }
 \value{
   a list which contains: the fitted \code{family}, a score
