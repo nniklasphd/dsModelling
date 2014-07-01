@@ -5,6 +5,4 @@ Version: 2.2
 License: GPL-3
 Title: Datashield package for regression analyses
 Description: This package contains functions for statistical modelling.
-AggregateMethods: glm.ds
-Collate:
-    'glm.ds.R'
+AggregateMethods: glmDS
