@@ -1,0 +1,39 @@
+\name{alphaPhiDS}
+\alias{alphaPhiDS}
+\title{Computes the parameters alpha and phi}
+\usage{
+alphaPhiDS(data, formula, family, clusterID, corstr, startBetas)
+}
+\arguments{
+  \item{data}{the input dataframe which contains the
+  variable specified in the formula.}
+
+  \item{formula}{a regression formula.}
+
+  \item{family}{an object of class Family.}
+
+  \item{the}{name of the column that holds the cluster
+  IDs.}
+
+  \item{corstr}{the correlation structure.}
+
+  \item{startBetas}{starting values for the beta
+  estimates.}
+}
+\value{
+a list
+}
+\description{
+This function is called by the client function 'ds.gee' to
+calculate the parameters alpha and phi.
+}
+\details{
+
+
+the parameters are calculated according to the correlation
+structure.
+}
+\author{
+Gaye, A.; Jones EM.
+}
+
