@@ -15,6 +15,7 @@
 #' @param zcor the user defined matrix user if the correlation structure is 'fixed'.
 #' @return a list
 #' @author Gaye, A.; Jones EM.
+#' @export
 #' 
 scoreVectDS <- function(data, formula, family, clusterID, corstr, alpha, phi, startBetas=NULL, zcor=NULL){
   

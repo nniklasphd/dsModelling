@@ -12,6 +12,7 @@
 #' @param startBetas starting values for the beta estimates.
 #' @return a list
 #' @author Gaye, A.; Jones EM.
+#' @export
 #' 
 alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   
