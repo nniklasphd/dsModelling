@@ -9,7 +9,8 @@
 #' @param family an object of class Family.
 #' @param the name of the column that holds the cluster IDs.
 #' @param corstr the correlation structure.
-#' @param startBetas starting values for the beta estimates.
+#' @param startBetas a character, the starting values concatenated by comma
+#' because it is not possible to use 'c()' in aggregate functions.
 #' @return a list
 #' @author Gaye, A.; Jones EM.
 #' @export
@@ -19,6 +20,7 @@ alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   input.table <- data
   id.indx <- which(colnames(input.table) == clusterID)
   id <- input.table[,id.indx]
+  startBetaValues  <- as.numeric(unlist(strsplit(startBetas,split=',')))
   
   # these two lines the 'X' and "Y" obtained through the 'geeglm'function of the package 'geepack'
   X.mat <- model.matrix(formula, data)

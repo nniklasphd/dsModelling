@@ -17,8 +17,9 @@ alphaPhiDS(data, formula, family, clusterID, corstr, startBetas)
 
   \item{corstr}{the correlation structure.}
 
-  \item{startBetas}{starting values for the beta
-  estimates.}
+  \item{startBetas}{a character, the starting values
+  concatenated by comma because it is not possible to use
+  'c()' in aggregate functions.}
 }
 \value{
 a list

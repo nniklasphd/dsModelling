@@ -2,8 +2,8 @@
 \alias{scoreVectDS}
 \title{Generates the score vector and information matrix}
 \usage{
-scoreVectDS(data, formula, family, clusterID, corstr, alpha, phi,
-  startBetas = NULL, zcor = NULL)
+scoreVectDS(data, formula, family, clusterID, corstr, alpha, phi, startBetas,
+  zcor = NULL)
 }
 \arguments{
   \item{data}{the input dataframe which contains the
@@ -22,8 +22,8 @@ scoreVectDS(data, formula, family, clusterID, corstr, alpha, phi,
 
   \item{phi}{the parameter alpha}
 
-  \item{startBetas}{starting values for the beta
-  estimates.}
+  \item{startBetas}{a character, the starting values
+  concatenated by comma}
 
   \item{zcor}{the user defined matrix user if the
   correlation structure is 'fixed'.}

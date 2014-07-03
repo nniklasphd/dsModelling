@@ -11,26 +11,22 @@
 #' @param corstr the correlation structure.
 #' @param alpha the parameter alpha
 #' @param phi the parameter alpha
-#' @param startBetas starting values for the beta estimates.
+#' @param startBetas a character, the starting values concatenated by comma
 #' @param zcor the user defined matrix user if the correlation structure is 'fixed'.
 #' @return a list
 #' @author Gaye, A.; Jones EM.
 #' @export
 #' 
-scoreVectDS <- function(data, formula, family, clusterID, corstr, alpha, phi, startBetas=NULL, zcor=NULL){
+scoreVectDS <- function(data, formula, family, clusterID, corstr, alpha, phi, startBetas, zcor=NULL){
   
   input.table <- data
   id.indx <- which(colnames(input.table) == clusterID)
   id <- input.table[,id.indx]
+  startBetas <- as.numeric(unlist(strsplit(startBetas,split=',')))
   
   # THESE TWO LINES GET THE 'X' and "Y" WE WERE GETTING THROUGH ONE the geeglm FUNCTION OF 'GEEPACK'
   X.mat <- model.matrix(formula, data)
   y.vect <-  Y.vec <- as.vector(model.response(model.frame(formula, data), type="numeric"))
-  
-  # SET THE BETA VALUES TO 0 IF THEY WERE NOT SPECIFIED
-  if(is.null(startBetas)) {
-    startBetas <- rep(0,dim(X.mat)[2])
-  }
   
   # NUMBER OF BETA PARAMETERS 
   npara <- dim(X.mat)[2]
