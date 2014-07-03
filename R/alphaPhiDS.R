@@ -32,7 +32,11 @@ alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   maxclsz <- max(clusz)
   
   # extracting family and similar information
-  f <- family 
+  if(family == "binomial"){ famlink <- binomial(link = "logit") }
+  if(family == "gaussian"){ famlink <- gaussian(link = "identity") }
+  if(family == "Gamma"){ famlink <- Gamma(link = "inverse") }
+  if(family == "poisson"){ famlink <- poisson(link = "log") }
+  f <- famlink
   LINKS <- c("identity", "logit", "probit", "cloglog", "log", "inverse", "fisherz", "lwybc2", "lwylog")
   VARIANCES <- c("gaussian", "binomial", "poisson", "Gamma")
   mean.link <- f$link
