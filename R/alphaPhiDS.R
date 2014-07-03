@@ -20,7 +20,7 @@ alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   input.table <- data
   id.indx <- which(colnames(input.table) == clusterID)
   id <- input.table[,id.indx]
-  startBetaValues  <- as.numeric(unlist(strsplit(startBetas,split=',')))
+  startBetas  <- as.numeric(unlist(strsplit(startBetas,split=',')))
   
   # these two lines the 'X' and "Y" obtained through the 'geeglm'function of the package 'geepack'
   X.mat <- model.matrix(formula, data)
