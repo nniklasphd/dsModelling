@@ -47,8 +47,8 @@ alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   mu <- quasi(LINKS[mean.link.v])$linkinv(X.mat%*%startBetas)
   
   # extracting summary statistics to calculate phi
-  pr2 <- (Y.vec - mu)^2/f$variance(mu)
-  pr <-(Y.vec - mu)/sqrt(f$variance(mu))
+  pr2 <- (as.numeirc(Y.vec) - as.numeric(mu))^2/f$variance(mu)
+  pr <-(as.numeirc(Y.vec) - as.numeric(mu))/sqrt(f$variance(mu))
   sum_p <- sum(pr2)
   # phi according to Zeger and Liang
   phi <- (N-npara)^{-1}*sum_p						 
