@@ -96,11 +96,11 @@ alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   
   # for 'ar1' correlation structure
   if(corstr=="ar1"){
-    sum.component<-vector("list", N.clus)
-    component<-matrix(rep(0,(N.clus*(max(clusz)-1))), nrow=N.clus)
+    component <- matrix(rep(0,(N.clus*(max(clusz)-2))), nrow=N.clus)
     for(i in 1:N.clus){
       for(j in 1:(clusz[i]-1)){
         component[i,j] <- mat.clus[[i]][j,j+1]
+        cat(i," ",j, "\n")
       }
     }
     temp <- sum(component)
