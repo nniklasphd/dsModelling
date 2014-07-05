@@ -26,7 +26,7 @@ scoreVectDS <- function(data, formula, family, clusterID, corstr, alpha, phi, st
   
   # THESE TWO LINES GET THE 'X' and "Y" WE WERE GETTING THROUGH ONE the geeglm FUNCTION OF 'GEEPACK'
   X.mat <- model.matrix(formula, data)
-  y.vect <-  Y.vec <- as.vector(model.response(model.frame(formula, data), type="numeric"))
+  y.vect <- as.vector(model.response(model.frame(formula, data), type="numeric"))
   
   # NUMBER OF BETA PARAMETERS 
   npara <- dim(X.mat)[2]
