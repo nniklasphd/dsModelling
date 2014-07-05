@@ -32,7 +32,7 @@ alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   clusz <- c(clusnew[1], diff(clusnew))
   N.clus <- length(clusz)
   maxclsz <- max(clusz)
-  
+  x1 <<- clusz
   # extracting family and similar information
   if(family == "binomial"){ famlink <- binomial(link = "logit") }
   if(family == "gaussian"){ famlink <- gaussian(link = "identity") }
@@ -60,7 +60,7 @@ alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   for(i in 2:N.clus){
     mat.clus[[i]] <- pearson[(clusnew[i-1]+1):clusnew[i]]%*%t(pearson[(clusnew[i-1]+1):clusnew[i]])
   }
-  
+  x2 <<- mat.clus
   # for 'exchangeable' correlation structure
   if(corstr=="exchangeable"){
     clus.sq <- vector("list", N.clus)
@@ -96,16 +96,15 @@ alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   
   # for 'ar1' correlation structure
   if(corstr=="ar1"){
-    component <- matrix(rep(0,(N.clus*(max(clusz)-2))), nrow=N.clus)
+    component <- matrix(rep(0,(N.clus*(max(clusz)-1))), nrow=N.clus)
     for(i in 1:N.clus){
       for(j in 1:(clusz[i]-1)){
         component[i,j] <- mat.clus[[i]][j,j+1]
-        cat(i," ",j, "\n")
       }
     }
     temp <- sum(component)
   }
-  
+
   # set alpha according to the specified correlation structure
   if(corstr=="exchangeable"){
     M <- phi*sum(clusz*(clusz-1))-phi*npara
