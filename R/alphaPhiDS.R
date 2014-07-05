@@ -60,7 +60,7 @@ alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   for(i in 2:N.clus){
     mat.clus[[i]] <- pearson[(clusnew[i-1]+1):clusnew[i]]%*%t(pearson[(clusnew[i-1]+1):clusnew[i]])
   }
-  x2 <<- mat.clus
+
   # for 'exchangeable' correlation structure
   if(corstr=="exchangeable"){
     clus.sq <- vector("list", N.clus)
@@ -98,9 +98,11 @@ alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   if(corstr=="ar1"){
     component <- matrix(rep(0,(N.clus*(max(clusz)-1))), nrow=N.clus)
     for(i in 1:N.clus){
-      for(j in 1:(clusz[i]-1)){
-        component[i,j] <- mat.clus[[i]][j,j+1]
-      }
+      #for(j in 1:(clusz[i]-1)){
+        #component[i,j] <- mat.clus[[i]][j,j+1]
+        qq <- length(diag(mat.clus[[i]]))
+        component[1:qq,] <- diag(mat.clus[[i]])#[j,j+1]
+      #}
     }
     temp <- sum(component)
   }
