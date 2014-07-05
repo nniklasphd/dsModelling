@@ -45,7 +45,11 @@ scoreVectDS <- function(data, formula, family, clusterID, corstr, alpha, phi, st
   lp.vect <- X.mat%*%startBetas
   
   # VALUES FOR THE INVERSE LINK FUNCTION AND THE RELATED MEAN AND VARIANCE
-  f <- family
+  if(family == "binomial"){ famlink <- binomial(link = "logit") }
+  if(family == "gaussian"){ famlink <- gaussian(link = "identity") }
+  if(family == "Gamma"){ famlink <- Gamma(link = "inverse") }
+  if(family == "poisson"){ famlink <- poisson(link = "log") }
+  f <- famlink
   mu.vect <- f$linkinv(lp.vect)
   var.vect <- f$variance(mu.vect)
   
