@@ -111,7 +111,7 @@ scoreVectDS <- function(data, formula, family, clusterID, corstr, alpha, phi, st
   for(i in 2:N.clus){
     A.mat[[i]] <- phi^(-1)*diag(var.vect[(clusnew[i-1]+1):clusnew[i]]) 
   }
-  return(list(R.mat, A.mat))
+  return(list('Rmat'=R.mat, 'A.mat'=A.mat))
   
 #   # CREATING THE V MATRIX - ESTIMATE OF THE WORKING CORRELATION MATRIX (LIANG AND ZEGER)
 #   V.mat <- vector("list", N.clus)
