@@ -59,11 +59,6 @@ scoreVectDS <- function(data, formula, family, clusterID, corstr, alpha, phi, st
   alpha[which(alpha >= 1 & alpha < 1.01)] <- 0.999999
   alpha[which(alpha <= -1 & alpha > -1.01)] <- -0.999999
   
-  if(length(which(abs(alpha) >= 1))){
-    cat("alpha values generated: \n", alpha, "\n")
-    stop(call.=FALSE, "\nThe values of alpha must be between -1 and 1!\n")
-  }
-  
   # LOAD THE 'nlme' PACKAGE TO USE FUNCTIONS TO CREATE CORRELATION STRUCTURES
   library("nlme")
   
@@ -102,10 +97,6 @@ scoreVectDS <- function(data, formula, family, clusterID, corstr, alpha, phi, st
   
   # MATRIX IF THE CORRELATION STRUCTURE IS 'FIXED' (USER DEFINED)
   if(corstr == "fixed"){
-    # DISPLAY A MEESAGE AND STOP PROCESS IF NO USER DEFINED COR MATRIX HAVE BEEN SUPPLIED
-    if(is.null(zcor)){
-      stop(call.=FALSE, "\n NO USER DEFINED CORRELATION 	STRUCTURE SUPPLIED!\n")
-    }
     low.diag.elts <- zcor[col(zcor) < row(zcor)]
     R.mat.userdef <- corSymm(low.diag.elts, form = ~ 1 | id)
     R.mat.userdef.i <- Initialize(R.mat.userdef, data=input.table)
@@ -113,96 +104,97 @@ scoreVectDS <- function(data, formula, family, clusterID, corstr, alpha, phi, st
   }
   
   R.mat <- list.of.matrices
-  
+
   # CREATING THE A MATRIX (LIANG AND ZEGER)
   A.mat <- vector("list", N.clus)
   A.mat[[1]] <- phi^(-1)*diag(var.vect[1:clusnew[1]])
   for(i in 2:N.clus){
     A.mat[[i]] <- phi^(-1)*diag(var.vect[(clusnew[i-1]+1):clusnew[i]]) 
   }
+  return(list(R.mat, A.mat))
   
-  # CREATING THE V MATRIX - ESTIMATE OF THE WORKING CORRELATION MATRIX (LIANG AND ZEGER)
-  V.mat <- vector("list", N.clus)
-  for(i in 1:N.clus){
-    V.mat[[i]] <- phi*(sqrt(A.mat[[i]])%*%R.mat[[i]]%*%sqrt(A.mat[[i]]))  
-  }
-  
-  # FAMILY-SPECIFIC FUNCTIONS TO HELP CALCULATE BETA
-  deriv.vect <- f$mu.eta(lp.vect)
-  
-  if(f$family=="gaussian"){
-    der.vect <- rep(1,N)
-  }
-  
-  if(f$family=="poisson") {
-    der.vect <- mu.vect^(-1)
-  }
-  
-  if(f$family=="binomial"){
-    der.vect <- 1/(mu.vect*(1-mu.vect))
-  }
-  
-  if(f$family=="Gamma"){
-    der.vect <- 1/(mu.vect^2)
-  }
-  
-  if(f$family=="inverse.gaussian"){
-    der.vect <- 1/(mu.vect^3)
-  }
-  
-  # DELTA MATRIX, LIANG AND ZEGER. THIS IS AN IDENTITY MATRIX IF USING CANONICAL LINK FOR A FAMILY
-  Delta.vec<-deriv.vect*der.vect
-  Delta.mat<-vector("list",N.clus)
-  Delta.mat[[1]] <- diag(Delta.vec[1:clusnew[1]])
-  for(i in 2:N.clus){
-    Delta.mat[[i]] <- diag(Delta.vec[(clusnew[i-1]+1):clusnew[i]])
-  }
-  
-  # D MATRIX OF PARTIAL DERIVATIVES, LIANG AND ZEGER
-  D.mat <- vector("list", N.clus)
-  D.mat[[1]] <- t(A.mat[[1]])%*%Delta.mat[[1]]%*%X.mat[1:clusnew[1],]
-  for(i in 2:N.clus){
-    D.mat[[i]] <- t(A.mat[[i]])%*%Delta.mat[[i]]%*%X.mat[ (clusnew[i-1]+1):clusnew[i],]
-  }
-  
-  # CALULATING ALL CLUSTER-SPECIFIC INFORMATION MATRICES 
-  I.mat<-vector("list", N.clus)
-  for(i in 1:N.clus){
-    I.mat[[i]] <- t(D.mat[[i]])%*%solve(V.mat[[i]])%*%D.mat[[i]]
-  }
-  
-  # SUMMING ALL CLUSTER-SPECIFIC INFORMATION MATRICES
-  infomatrix <- matrix(rep(0,npara^2), ncol=npara)
-  for (i in 1:N.clus){
-    infomatrix <- infomatrix+I.mat[[i]]
-  }
-  
-  # CALULATING ALL CLUSTER-SPECIFIC SCORE VECTORS
-  s.vec <- vector("list", N.clus)
-  s.vec[[1]] <- t(D.mat[[1]])%*%solve(V.mat[[1]])%*%(y.vect[1:clusnew[1]]-mu.vect[1:clusnew[1]])
-  for(i in 2:N.clus){
-    s.vec[[i]] <- t(D.mat[[i]])%*%solve(V.mat[[i]])%*%(y.vect[(clusnew[i-1]+1):clusnew[i]]-mu.vect[(clusnew[i-1]+1):clusnew[i]])
-  }
-  
-  # SUMMING ALL CLUSTER-SPECIFIC SCORE VECTORS
-  score <- c(rep(0, npara))
-  for (i in 1:N.clus){
-    score <- score+s.vec[[i]]
-  }
-  
-  # J.matrices needed to calculate standard error of estimates
-  J1 <- vector("list", N.clus)
-  J1[[1]] <- t(D.mat[[1]])%*%solve(V.mat[[1]])%*%(y.vect[1:clusnew[1]]-mu.vect[1:clusnew[1]])%*%t(y.vect[1:clusnew[1]]-mu.vect[1:clusnew[1]])%*%solve(V.mat[[1]])%*%D.mat[[1]]
-  for(i in 2:N.clus){
-    J1[[i]] <- t(D.mat[[i]])%*%solve(V.mat[[i]])%*%(y.vect[(clusnew[i-1]+1):clusnew[i]]-
-                                                      mu.vect[(clusnew[i-1]+1):clusnew[i]])%*%t(y.vect[(clusnew[i-1]+1):clusnew[i]]
-                                                                                                -mu.vect[(clusnew[i-1]+1):clusnew[i]])%*%solve(V.mat[[i]])%*%D.mat[[i]]
-  }
-  J.matrix <- matrix(rep(0,npara^2), ncol=npara)
-  for (i in 1:N.clus){
-    J.matrix <- J.matrix + J1[[i]]
-  }
-  
-  # OUTPUT
-  list(score.vector=score, info.matrix=infomatrix, J.matrix=J.matrix)   
+#   # CREATING THE V MATRIX - ESTIMATE OF THE WORKING CORRELATION MATRIX (LIANG AND ZEGER)
+#   V.mat <- vector("list", N.clus)
+#   for(i in 1:N.clus){
+#     V.mat[[i]] <- phi*(sqrt(A.mat[[i]])%*%R.mat[[i]]%*%sqrt(A.mat[[i]]))  
+#   }
+#   
+#   # FAMILY-SPECIFIC FUNCTIONS TO HELP CALCULATE BETA
+#   deriv.vect <- f$mu.eta(lp.vect)
+#   
+#   if(f$family=="gaussian"){
+#     der.vect <- rep(1,N)
+#   }
+#   
+#   if(f$family=="poisson") {
+#     der.vect <- mu.vect^(-1)
+#   }
+#   
+#   if(f$family=="binomial"){
+#     der.vect <- 1/(mu.vect*(1-mu.vect))
+#   }
+#   
+#   if(f$family=="Gamma"){
+#     der.vect <- 1/(mu.vect^2)
+#   }
+#   
+#   if(f$family=="inverse.gaussian"){
+#     der.vect <- 1/(mu.vect^3)
+#   }
+#   
+#   # DELTA MATRIX, LIANG AND ZEGER. THIS IS AN IDENTITY MATRIX IF USING CANONICAL LINK FOR A FAMILY
+#   Delta.vec<-deriv.vect*der.vect
+#   Delta.mat<-vector("list",N.clus)
+#   Delta.mat[[1]] <- diag(Delta.vec[1:clusnew[1]])
+#   for(i in 2:N.clus){
+#     Delta.mat[[i]] <- diag(Delta.vec[(clusnew[i-1]+1):clusnew[i]])
+#   }
+#   
+#   # D MATRIX OF PARTIAL DERIVATIVES, LIANG AND ZEGER
+#   D.mat <- vector("list", N.clus)
+#   D.mat[[1]] <- t(A.mat[[1]])%*%Delta.mat[[1]]%*%X.mat[1:clusnew[1],]
+#   for(i in 2:N.clus){
+#     D.mat[[i]] <- t(A.mat[[i]])%*%Delta.mat[[i]]%*%X.mat[ (clusnew[i-1]+1):clusnew[i],]
+#   }
+#   
+#   # CALULATING ALL CLUSTER-SPECIFIC INFORMATION MATRICES 
+#   I.mat<-vector("list", N.clus)
+#   for(i in 1:N.clus){
+#     I.mat[[i]] <- t(D.mat[[i]])%*%solve(V.mat[[i]])%*%D.mat[[i]]
+#   }
+#   
+#   # SUMMING ALL CLUSTER-SPECIFIC INFORMATION MATRICES
+#   infomatrix <- matrix(rep(0,npara^2), ncol=npara)
+#   for (i in 1:N.clus){
+#     infomatrix <- infomatrix+I.mat[[i]]
+#   }
+#   
+#   # CALULATING ALL CLUSTER-SPECIFIC SCORE VECTORS
+#   s.vec <- vector("list", N.clus)
+#   s.vec[[1]] <- t(D.mat[[1]])%*%solve(V.mat[[1]])%*%(y.vect[1:clusnew[1]]-mu.vect[1:clusnew[1]])
+#   for(i in 2:N.clus){
+#     s.vec[[i]] <- t(D.mat[[i]])%*%solve(V.mat[[i]])%*%(y.vect[(clusnew[i-1]+1):clusnew[i]]-mu.vect[(clusnew[i-1]+1):clusnew[i]])
+#   }
+#   
+#   # SUMMING ALL CLUSTER-SPECIFIC SCORE VECTORS
+#   score <- c(rep(0, npara))
+#   for (i in 1:N.clus){
+#     score <- score+s.vec[[i]]
+#   }
+#   
+#   # J.matrices needed to calculate standard error of estimates
+#   J1 <- vector("list", N.clus)
+#   J1[[1]] <- t(D.mat[[1]])%*%solve(V.mat[[1]])%*%(y.vect[1:clusnew[1]]-mu.vect[1:clusnew[1]])%*%t(y.vect[1:clusnew[1]]-mu.vect[1:clusnew[1]])%*%solve(V.mat[[1]])%*%D.mat[[1]]
+#   for(i in 2:N.clus){
+#     J1[[i]] <- t(D.mat[[i]])%*%solve(V.mat[[i]])%*%(y.vect[(clusnew[i-1]+1):clusnew[i]]-
+#                                                       mu.vect[(clusnew[i-1]+1):clusnew[i]])%*%t(y.vect[(clusnew[i-1]+1):clusnew[i]]
+#                                                                                                 -mu.vect[(clusnew[i-1]+1):clusnew[i]])%*%solve(V.mat[[i]])%*%D.mat[[i]]
+#   }
+#   J.matrix <- matrix(rep(0,npara^2), ncol=npara)
+#   for (i in 1:N.clus){
+#     J.matrix <- J.matrix + J1[[i]]
+#   }
+#   
+#   # OUTPUT
+#   list(score.vector=score, info.matrix=infomatrix, J.matrix=J.matrix)   
 }
