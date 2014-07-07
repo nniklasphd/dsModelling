@@ -17,7 +17,7 @@
 #' 
 alphaPhiDS <- function (data, formula, family, clusterID, corstr, startBetas){
   
-  input.table <- data
+  input.table <-  data[order(data[,clusterID]), ]
   id.indx <- which(colnames(input.table) == clusterID)
   id <- input.table[,id.indx]
   startBetas  <- as.numeric(unlist(strsplit(startBetas,split=',')))
