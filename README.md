@@ -1,4 +1,4 @@
-dsmodelling
+dsModelling
 ============
 
-Datashield package for regression analyses
+Datashield server site functions for statistical modelling
