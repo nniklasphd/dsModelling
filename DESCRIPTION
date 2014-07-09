@@ -1,10 +1,10 @@
-Package: dsmodelling
+Package: dsModelling
 Maintainer: <datashield@obiba.org>
 Author: <datashield@obiba.org>
 Version: 3.0.0
 License: GPL-3
-Title: DataSHIELD statistical modelling functions for server
-Description: DataSHIELD statistical modelling functions for server
+Title: DataSHIELD server site functions for statistical modelling
+Description: DataSHIELD server site functions for statistical modelling
 Depends:
     nlme
 AggregateMethods: glmDS, alphaPhiDS, scoreVectDS
