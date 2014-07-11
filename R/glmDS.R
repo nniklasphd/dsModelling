@@ -1,19 +1,20 @@
 #'
 #' @title Fits a generalized linear model
-#' @description Fits a GLM for one iteration only.
-#' @details This function cannot be called through 'datashield.aggregate' like other aggregate functions.
-#' It is only called from within the client function \code{ds.glm} in the package \code{dsmodellingclient}.
+#' @description Fits a GLM for one iteration only
+#' @details This function cannot be called through 'datashield.aggregate' like other aggregate functions
+#' It is only called from within the client function \code{ds.glm} in the package \code{dsmodellingclient}
 #' @param formula an object of class \code{formula}
 #' @param family a description of the error distribution and link function to
 #' used in the model
-#' @param beta.vect a string character: the starting values for the parameters in the linear predictor.
+#' @param beta.vect a string character: the starting values for the parameters in the linear predictor
+#' @param dtframe the dataframe that holds the variable in the formula
 #' @return a list which contains: the fitted \code{family}, a score vector and an information matrix
 #' @author Burton, P.; Laflamme, P.; Gaye, A.
 #' @export
 #'
-glmDS <- function (formula, family, beta.vect=NULL) {
+glmDS <- function (formula, family, beta.vect=NULL, dtframe) {
 
-  mod.glm.ds <- glm(formula, family=family, x=TRUE, control=glm.control(maxit=1), constrast=NULL)
+  mod.glm.ds <- glm(formula, family=family, x=TRUE, control=glm.control(maxit=1), constrast=NULL, data=dtframe)
 
   X.mat <- as.matrix(mod.glm.ds$x)
 

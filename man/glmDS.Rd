@@ -2,7 +2,7 @@
 \alias{glmDS}
 \title{Fits a generalized linear model}
 \usage{
-glmDS(formula, family, beta.vect = NULL)
+glmDS(formula, family, beta.vect = NULL, dtframe)
 }
 \arguments{
   \item{formula}{an object of class \code{formula}}
@@ -11,22 +11,25 @@ glmDS(formula, family, beta.vect = NULL)
   link function to used in the model}
 
   \item{beta.vect}{a string character: the starting values
-  for the parameters in the linear predictor.}
+  for the parameters in the linear predictor}
+
+  \item{dtframe}{the dataframe that holds the variable in
+  the formula}
 }
 \value{
 a list which contains: the fitted \code{family}, a score
 vector and an information matrix
 }
 \description{
-Fits a GLM for one iteration only.
+Fits a GLM for one iteration only
 }
 \details{
 
 
 This function cannot be called through
-'datashield.aggregate' like other aggregate functions. It
-is only called from within the client function
-\code{ds.glm} in the package \code{dsmodellingclient}.
+'datashield.aggregate' like other aggregate functions It is
+only called from within the client function \code{ds.glm}
+in the package \code{dsmodellingclient}
 }
 \author{
 Burton, P.; Laflamme, P.; Gaye, A.
