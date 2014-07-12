@@ -14,6 +14,12 @@
 #'
 glmDS <- function (formula, family, beta.vect=NULL, dtframe) {
 
+  # turn the variables in the formula into numeric
+  temp <- glmhelper2(formula)
+  for(i in 1:length(temp)){
+    temp[[i]] <- as.numeric(as.character(temp[[i]]))
+  }
+  
   mod.glm.ds <- glm(formula, family=family, x=TRUE, control=glm.control(maxit=1), constrast=NULL, data=dtframe)
 
   X.mat <- as.matrix(mod.glm.ds$x)
