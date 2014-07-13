@@ -7,14 +7,13 @@
 #' @param family a description of the error distribution and link function to
 #' used in the model
 #' @param beta.vect a string character: the starting values for the parameters in the linear predictor
-#' @param dtframe the dataframe that holds the variable in the formula
 #' @return a list which contains: the fitted \code{family}, a score vector and an information matrix
 #' @author Burton, P.; Laflamme, P.; Gaye, A.
 #' @export
 #'
-glmDS <- function (formula, family, beta.vect=NULL, dtframe) {
+glmDS <- function (formula, family, beta.vect=NULL) {
 
-  mod.glm.ds <- glm(formula, family=family, x=TRUE, control=glm.control(maxit=1), constrast=NULL, data=dtframe)
+  mod.glm.ds <- glm(formula, family=family, x=TRUE, control=glm.control(maxit=1), constrast=NULL)
 
   X.mat <- as.matrix(mod.glm.ds$x)
 

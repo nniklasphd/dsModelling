@@ -2,7 +2,7 @@
 \alias{glmDS}
 \title{Fits a generalized linear model}
 \usage{
-glmDS(formula, family, beta.vect = NULL, dtframe)
+glmDS(formula, family, beta.vect = NULL)
 }
 \arguments{
   \item{formula}{an object of class \code{formula}}
@@ -12,9 +12,6 @@ glmDS(formula, family, beta.vect = NULL, dtframe)
 
   \item{beta.vect}{a string character: the starting values
   for the parameters in the linear predictor}
-
-  \item{dtframe}{the dataframe that holds the variable in
-  the formula}
 }
 \value{
 a list which contains: the fitted \code{family}, a score
