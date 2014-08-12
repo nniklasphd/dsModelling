@@ -8,3 +8,4 @@ Description: DataSHIELD server site functions for statistical modelling
 Depends:
     nlme
 AggregateMethods: glmDS, alphaPhiDS, scoreVectDS
+AssignMethods: attach=base::attach
