@@ -1,7 +1,7 @@
 Package: dsModelling
 Maintainer: <datashield@obiba.org>
 Author: <datashield@obiba.org>
-Version: 3.0.0
+Version: 3.0.1
 License: GPL-3
 Title: DataSHIELD server site functions for statistical modelling
 Description: DataSHIELD server site functions for statistical modelling
