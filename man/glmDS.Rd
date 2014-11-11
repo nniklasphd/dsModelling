@@ -12,6 +12,14 @@ glmDS(formula, family, beta.vect = NULL)
 
   \item{beta.vect}{a string character: the starting values
   for the parameters in the linear predictor}
+
+  \item{weights}{an optional vector of ‘prior weights’ to
+  be used in the fitting process. Should be NULL or a
+  numeric vector.}
+
+  \item{offset}{null or a numreric vector that can be used
+  to specify an a priori known component to be included in
+  the linear predictor during fitting.}
 }
 \value{
 a list which contains: the fitted \code{family}, a score
