@@ -11,8 +11,8 @@
 #' @param x a character, the name of the data frame that holds the original data, this is the data to be expanded.
 #' @param intervalWidth, a numeric vector which gives the chosen width of the intervals ('pieces'). 
 #' This can be one value (in which case all the intervals that same width) or several different values.
-#' If no value(s) is(are) provided a single default value is used. That default value is the set to be the 
-#' 1/10th of the largest exit time across all the studies.
+#' If no value(s) is(are) provided a single default value is used. hat default value is the set to be the 
+#' 1/10th of the mean across all the studies.
 #' @param idCol a characte,r the name of the column that holds the individual IDs of the subjects.
 #' @param entryCol a character, the name of the column that holds the entry times (i.e. start of follow up).
 #' If no name is provided the default is to set all the entry times to 0 in a column named "STARTTIME".

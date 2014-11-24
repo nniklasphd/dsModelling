@@ -30,7 +30,12 @@ glmDS <- function (formula, family, beta.vect=NULL, offset) {
   y.vect<-as.vector(mod.glm.ds$y)
 
   lp.vect.temp <- X.mat%*%beta.vect
-  lp.vect <- lp.vect.temp + offset
+  if(is.null(offset)){
+    lp.vect <- lp.vect.temp
+  }else{
+    lp.vect <- lp.vect.temp + offset    
+  }
+
 
   f<-mod.glm.ds$family
 
