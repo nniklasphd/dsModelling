@@ -33,7 +33,8 @@ glmDS <- function (formula, family, beta.vect=NULL, offset) {
   if(is.null(offset)){
     lp.vect <- lp.vect.temp
   }else{
-    lp.vect <- lp.vect.temp + offset    
+    offsetVector <- eval(parse(text=offset))  
+    lp.vect <- lp.vect.temp + offsetVector   
   }
 
 
