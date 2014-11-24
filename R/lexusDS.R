@@ -10,8 +10,8 @@
 #' preferable to indicate the names of the covariates to be included via the argument 'variables'.
 #' @param x a character, the name of the data frame that holds the original data, this is the data to be expanded.
 #' @param intervalWidth, a numeric vector which gives the chosen width of the intervals ('pieces'). 
-#' This can be one value in which case all the intervals to that same width, or several different values.
-#' If no value(s) are provided a single default value is used. That default value is the set to be the 
+#' This can be one value (in which case all the intervals that same width) or several different values.
+#' If no value(s) is(are) provided a single default value is used. That default value is the set to be the 
 #' 1/10th of the largest exit time across all the studies.
 #' @param idCol a characte,r the name of the column that holds the individual IDs of the subjects.
 #' @param entryCol a character, the name of the column that holds the entry times (i.e. start of follow up).
@@ -39,20 +39,26 @@ lexusDS <- function(x, intervalWidth, idCol, entryCol, exitCol, statusCol, varia
     dataset <- cbind(dataset, STARTTIME )
   }
   
-  # get each subject's time period. Here we call the function 'getBreaks' which which uses the function 'personBreaks'
+  # get each subject's time period. Here we call the function 'getBreaks' 
+  # which which uses the function 'personBreaks'
   sbreaks <- getBreaks(dataset, idCol, exitCol, intervalWidth)
+  missingbreaks <- which(is.na(sbreaks))
   
-  # get the extended period of observation (the left time points i.e. 'entry points' and right time points i.e. 'exit points')
+  # get the extended period of observation (the left time points i.e. 
+  # 'entry points' and right time points i.e. 'exit points')
   starts <- lapply(sbreaks, function(x) x[-length(x)])  
+  starts[missingbreaks] <- NA
   stops <-  lapply(sbreaks, function(x) x[-1])
+  stops[missingbreaks] <- NA
 
-  # just used to deal with. 'cumsum' (cumulative sums) get the index of the last observation for each subject.
+  # just used to deal with. 'cumsum' (cumulative sums) get the index 
+  # of the last observation for each subject.
   count.per.id <- sapply(starts, length)
   index <- tapply(dataset[,idCol], dataset[,idCol], length)
-  index <- cumsum(index) 
+  index <- cumsum(index)  
 
   event <- rep(0,sum(count.per.id))
-  event[cumsum(count.per.id)] <- dataset[index, statusCol]  
+  event[cumsum(count.per.id)] <- dataset[index, statusCol]   
   
   # counts of period for each individual
   xx <- list()
@@ -63,11 +69,11 @@ lexusDS <- function(x, intervalWidth, idCol, entryCol, exitCol, statusCol, varia
   myIds <- rep(dataset[index, idCol], count.per.id)
   expandedTable <- data.frame(myIds, unlist(starts), unlist(stops), event, TIMEID) 
   colnames(expandedTable) <- c(idCol, entryCol, exitCol, statusCol, "TIMEID")
-    
+  
   # create the period of observation
   SURVIVALTIME <- expandedTable[, exitCol] - expandedTable[, entryCol]
   expandedTable <- cbind(expandedTable, SURVIVALTIME)
-
+  
   # add all other variables on the input table
   if(is.null(variables)){
     varnames <- colnames(dataset)
@@ -85,7 +91,7 @@ lexusDS <- function(x, intervalWidth, idCol, entryCol, exitCol, statusCol, varia
     cols <- append(cols, vars2add[i])                       
   }
   colnames(expandedTable) <- cols
-
+  
   return(expandedTable)
   
 }

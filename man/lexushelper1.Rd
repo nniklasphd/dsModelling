@@ -20,6 +20,16 @@ for each subject.
 }
 \details{
 
+
+The strategy used in this function consists of walking
+through the specified interval width and creating interval.
+Each time an interval is created the exit time is reduced
+by the same magnitude of time. When the remaining exit time
+is smaller than the next interval to create to process
+stops and that last interval is then the interval in which
+the subject fails. The remaining exit time is in fact the
+survival time in the last interval where the subject
+failed.
 }
 \author{
 Gaye, A.

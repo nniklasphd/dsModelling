@@ -2,7 +2,7 @@
 \alias{glmDS}
 \title{Fits a generalized linear model}
 \usage{
-glmDS(formula, family, beta.vect = NULL)
+glmDS(formula, family, beta.vect = NULL, offset)
 }
 \arguments{
   \item{formula}{an object of class \code{formula}}
@@ -12,10 +12,6 @@ glmDS(formula, family, beta.vect = NULL)
 
   \item{beta.vect}{a string character: the starting values
   for the parameters in the linear predictor}
-
-  \item{weights}{an optional vector of ‘prior weights’ to
-  be used in the fitting process. Should be NULL or a
-  numeric vector.}
 
   \item{offset}{null or a numreric vector that can be used
   to specify an a priori known component to be included in

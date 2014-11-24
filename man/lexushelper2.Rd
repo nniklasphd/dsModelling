@@ -26,6 +26,9 @@ subject.
 }
 \details{
 
+
+If the exit time information is missing one single break is
+returned with the a missing value.
 }
 \author{
 Gaye, A.

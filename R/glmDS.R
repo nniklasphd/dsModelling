@@ -7,17 +7,15 @@
 #' @param family a description of the error distribution and link function to
 #' used in the model
 #' @param beta.vect a string character: the starting values for the parameters in the linear predictor
-#' @param weights an optional vector of ‘prior weights’ to be used in the fitting process. Should be NULL or 
-#' a numeric vector.
 #' @param offset  null or a numreric vector that can be used to specify an a priori known component to be 
 #' included in the linear predictor during fitting.
 #' @return a list which contains: the fitted \code{family}, a score vector and an information matrix
 #' @author Burton, P.; Laflamme, P.; Gaye, A.
 #' @export
 #'
-glmDS <- function (formula, family, beta.vect=NULL, weights, offset) {
+glmDS <- function (formula, family, beta.vect=NULL, offset) {
 
-  mod.glm.ds <- glm(formula, family=family, x=TRUE, control=glm.control(maxit=1), weights=weights, offset=offset, constrast=NULL)
+  mod.glm.ds <- glm(formula, family=family, x=TRUE, control=glm.control(maxit=1), constrast=NULL)
 
   X.mat <- as.matrix(mod.glm.ds$x)
 
@@ -31,7 +29,8 @@ glmDS <- function (formula, family, beta.vect=NULL, weights, offset) {
 
   y.vect<-as.vector(mod.glm.ds$y)
 
-  lp.vect<-X.mat%*%beta.vect
+  lp.vect.temp <- X.mat%*%beta.vect
+  lp.vect <- lp.vect.temp + offset
 
   f<-mod.glm.ds$family
 

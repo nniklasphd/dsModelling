@@ -11,11 +11,11 @@ lexusDS(x, intervalWidth, idCol, entryCol, exitCol, statusCol, variables)
 
   \item{intervalWidth,}{a numeric vector which gives the
   chosen width of the intervals ('pieces'). This can be one
-  value in which case all the intervals to that same width,
-  or several different values. If no value(s) are provided
-  a single default value is used. That default value is the
-  set to be the 1/10th of the largest exit time across all
-  the studies.}
+  value (in which case all the intervals that same width)
+  or several different values. If no value(s) is(are)
+  provided a single default value is used. That default
+  value is the set to be the 1/10th of the largest exit
+  time across all the studies.}
 
   \item{idCol}{a characte,r the name of the column that
   holds the individual IDs of the subjects.}
