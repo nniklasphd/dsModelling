@@ -37,7 +37,7 @@ glmDS <- function (formula, family, beta.vect=NULL, offset) {
     # and delete the correpsonding entries in the offset vector
     offsetVector <- eval(parse(text=offset))  
     formulatext <- gsub(" ", "", deparse(formula), fixed=TRUE)
-    outcomeName <- strsplit(formulatext, split='~')[[1]]
+    outcomeName <- strsplit(formulatext, split='~')[[1]][1]
     outcomeVector <- eval(parse(text=outcomeName)) 
     indxNA <- which(is.na(outcomeVector))
     if(length(indxNA) > 0){offsetVector <- offsetVector[-indxNA]}
