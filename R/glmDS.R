@@ -33,7 +33,15 @@ glmDS <- function (formula, family, beta.vect=NULL, offset) {
   if(is.null(offset)){
     lp.vect <- lp.vect.temp
   }else{
+    # check for missing values in the outcome vector 
+    # and delete the correpsonding entries in the offset vector
     offsetVector <- eval(parse(text=offset))  
+    formulatext <- gsub(" ", "", deparse(formula), fixed=TRUE)
+    outcomeName <- strsplit(deparse(formulatext), split='~')[[1]]
+    outcomeVector <- eval(parse(text=outcomeName)) 
+    indxNA <- which(is.na(outcomeVector))
+    if(length(indxNA) > 0){offsetVector <- offsetVector[-indxNA]}
+    
     lp.vect <- lp.vect.temp + offsetVector   
   }
 
