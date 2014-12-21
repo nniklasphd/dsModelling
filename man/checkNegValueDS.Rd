@@ -1,0 +1,29 @@
+\name{checkNegValueDS}
+\alias{checkNegValueDS}
+\title{Checks if a numeric variable has negative values}
+\usage{
+checkNegValueDS(weights)
+}
+\arguments{
+  \item{weigths}{a numeric vector}
+}
+\value{
+a boolean; TRUE if the vector has one or more negative
+values and FALSE otherwise
+}
+\description{
+this function is only called by the client function
+\code{ds.glm}.
+}
+\details{
+
+
+if a user sets the parameter 'weights' on the client site
+function \code{ds.glm} this server side function is called
+to verify that the 'weights' vector does not have negative
+values because no negative are allowed in weights.
+}
+\author{
+Gaye, A.
+}
+

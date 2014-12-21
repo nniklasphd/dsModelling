@@ -9,5 +9,6 @@ Depends:
     nlme
 AggregateMethods: glmDS,
     alphaPhiDS,
-    scoreVectDS
+    scoreVectDS,
+    checkNegValueDS
 AssignMethods: lexusDS
