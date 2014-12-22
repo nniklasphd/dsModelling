@@ -17,7 +17,7 @@
 #' @author Burton, P.; Gaye, A.; Laflamme, P.
 #' @export
 #'
-glmdDS <- function (formula, family, beta.vect=NULL, offset, weights, data) {
+glmDS <- function (formula, family, beta.vect=NULL, offset, weights, data) {
   
   # reconstruct the formula that was re-written on the client side to protect some of the symbols
   formula <- gsub( "TILDA", "~", formula, fixed=TRUE)

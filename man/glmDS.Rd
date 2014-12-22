@@ -2,7 +2,7 @@
 \alias{glmDS}
 \title{Fits a generalized linear model}
 \usage{
-glmDS(formula, family, beta.vect = NULL, offset)
+glmDS(formula, family, beta.vect = NULL, offset, weights, data)
 }
 \arguments{
   \item{formula}{an object of class \code{formula}}
@@ -16,6 +16,13 @@ glmDS(formula, family, beta.vect = NULL, offset)
   \item{offset}{null or a numreric vector that can be used
   to specify an a priori known component to be included in
   the linear predictor during fitting.}
+
+  \item{weights}{an optional vector of 'prior weights' to
+  be used in the fitting process. Should be NULL or a
+  numeric vector.}
+
+  \item{data}{a character, the name of an optional data
+  frame containing the variables in in the \code{formula}.}
 }
 \value{
 a list which contains: the fitted \code{family}, a score
@@ -33,6 +40,6 @@ only called from within the client function \code{ds.glm}
 in the package \code{dsmodellingclient}
 }
 \author{
-Burton, P.; Laflamme, P.; Gaye, A.
+Burton, P.; Gaye, A.; Laflamme, P.
 }
 
