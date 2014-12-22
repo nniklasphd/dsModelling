@@ -2,7 +2,7 @@
 \alias{glmdDS}
 \title{Fits a generalized linear model}
 \usage{
-glmdDS(formula, family, beta.vect = NULL, offset, weights)
+glmdDS(formula, family, beta.vect = NULL, offset, weights, data)
 }
 \arguments{
   \item{formula}{an object of class \code{formula}}
@@ -20,6 +20,9 @@ glmdDS(formula, family, beta.vect = NULL, offset, weights)
   \item{weights}{an optional vector of 'prior weights' to
   be used in the fitting process. Should be NULL or a
   numeric vector.}
+
+  \item{data}{a character, the name of an optional data
+  frame containing the variables in in the \code{formula}.}
 }
 \value{
 a list which contains: the fitted \code{family}, a score

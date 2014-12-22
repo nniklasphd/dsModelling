@@ -11,11 +11,13 @@
 #' included in the linear predictor during fitting.
 #' @param weights  an optional vector of 'prior weights' to be used in the fitting process. Should be NULL 
 #' or a numeric vector.
+#' @param data a character, the name of an optional data frame containing the variables in 
+#' in the \code{formula}. 
 #' @return a list which contains: the fitted \code{family}, a score vector and an information matrix
 #' @author Burton, P.; Gaye, A.; Laflamme, P.
 #' @export
 #'
-glmdDS <- function (formula, family, beta.vect=NULL, offset, weights) {
+glmdDS <- function (formula, family, beta.vect=NULL, offset, weights, data) {
   
   # reconstruct the formula that was re-written on the client side to protect some of the symbols
   formula <- gsub( "TILDA", "~", formula, fixed=TRUE)
@@ -30,7 +32,10 @@ glmdDS <- function (formula, family, beta.vect=NULL, offset, weights) {
     formula <- as.formula(formulaText)
   }
   
-  mod.glm.ds <- glm(formula, family=family, x=TRUE, control=glm.control(maxit=1), constrast=NULL, weights=eval(parse(text=weights)))
+  # get the value of the parameter provided as character in the client side
+  ww <- eval(parse(text=weights))
+  dt <- eval(parse(text=data))
+  mod.glm.ds <- glm(formula, family=family, x=TRUE, control=glm.control(maxit=1), constrast=NULL, weights=ww, data=dt)
   
   X.mat <- as.matrix(mod.glm.ds$x)
   
