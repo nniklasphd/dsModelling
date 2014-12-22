@@ -27,15 +27,37 @@ glmDS <- function (formula, family, beta.vect=NULL, offset, weights, data) {
   if(is.null(offset)){
     formula <- as.formula(formula)    
   }else{
-    offsetVector <- eval(parse(text=offset))
+    myterms <- unlist(strsplit(offset, split='$', fixed=TRUE))
+    if(length(myterms) > 1){
+      offsetVector <- eval(parse(text=offset))
+    }else{
+      if(!(is.null(data))){
+        offsetVector <- eval(parse(text=paste0(data, "$", offset)))       
+      }else{
+        offsetVector <- eval(parse(text=offset))
+      }
+    }
     formulaText <- paste0(formula, "+offset(offsetVector)")
     formula <- as.formula(formulaText)
   }
   
   # get the value of the parameter provided as character in the client side
-  ww <- eval(parse(text=weights))
-  dt <- eval(parse(text=data))
-  mod.glm.ds <- glm(formula, family=family, x=TRUE, control=glm.control(maxit=1), constrast=NULL, weights=ww, data=dt)
+  if(is.null(weights)){
+    weightsVector <- eval(parse(text=weights))   
+  }else{
+    myterms <- unlist(strsplit(weights, split='$', fixed=TRUE))
+    if(length(myterms) > 1){
+      weightsVector <- eval(parse(text=weights))
+    }else{
+      if(!(is.null(data))){
+        weightsVector <- eval(parse(text=paste0(data, "$", weights)))       
+      }else{
+        weightsVector <- eval(parse(text=weights))
+      }
+    }
+  }
+  dataTable <- eval(parse(text=data))
+  mod.glm.ds <- glm(formula, family=family, x=TRUE, control=glm.control(maxit=1), constrast=NULL, weights=weightsVector, data=dataTable)
   
   X.mat <- as.matrix(mod.glm.ds$x)
   
