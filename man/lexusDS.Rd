@@ -2,10 +2,10 @@
 \alias{lexusDS}
 \title{Generates an expanded version of a dataset that contains survival data}
 \usage{
-lexusDS(x, intervalWidth, idCol, entryCol, exitCol, statusCol, variables)
+lexusDS(data, intervalWidth, idCol, entryCol, exitCol, statusCol, variables)
 }
 \arguments{
-  \item{x}{a character, the name of the data frame that
+  \item{data}{a character, the name of the data frame that
   holds the original data, this is the data to be
   expanded.}
 

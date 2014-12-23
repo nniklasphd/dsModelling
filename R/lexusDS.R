@@ -8,7 +8,7 @@
 #' The entry and exit times in the input table are used to compute the total survival time. 
 #' By default all the covariates in the input table are included in the expanded output table but it is 
 #' preferable to indicate the names of the covariates to be included via the argument 'variables'.
-#' @param x a character, the name of the data frame that holds the original data, this is the data to be expanded.
+#' @param data a character, the name of the data frame that holds the original data, this is the data to be expanded.
 #' @param intervalWidth, a numeric vector which gives the chosen width of the intervals ('pieces'). 
 #' This can be one value (in which case all the intervals that same width) or several different values.
 #' If no value(s) is(are) provided a single default value is used. hat default value is the set to be the 
@@ -29,8 +29,9 @@
 #' @return a dataframe, an expanded version of the input tabl.
 #' @author Gaye, A.; Burton, P.
 #' 
-lexusDS <- function(x, intervalWidth, idCol, entryCol, exitCol, statusCol, variables){
-  dataset <- eval(parse(text=x))
+lexusDS <- function(data, intervalWidth, idCol, entryCol, exitCol, statusCol, variables){
+  
+  dataset <- eval(parse(text=data))
   
   # if entry time is not provided set all entry times to 0
   if(is.null(entryCol)){
@@ -50,15 +51,15 @@ lexusDS <- function(x, intervalWidth, idCol, entryCol, exitCol, statusCol, varia
   starts[missingbreaks] <- NA
   stops <-  lapply(sbreaks, function(x) x[-1])
   stops[missingbreaks] <- NA
-
-  # just used to deal with. 'cumsum' (cumulative sums) get the index 
-  # of the last observation for each subject.
+  
+  # just used to deal with. 'cumsum' (cumulative sums) get the index of the 
+  # last observation for each subject.
   count.per.id <- sapply(starts, length)
   index <- tapply(dataset[,idCol], dataset[,idCol], length)
-  index <- cumsum(index)  
-
+  index <- cumsum(index) 
+  
   event <- rep(0,sum(count.per.id))
-  event[cumsum(count.per.id)] <- dataset[index, statusCol]   
+  event[cumsum(count.per.id)] <- dataset[index, statusCol]  
   
   # counts of period for each individual
   xx <- list()
