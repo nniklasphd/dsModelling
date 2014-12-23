@@ -27,7 +27,8 @@
 #' no variables are indicated) all the covariates in the inout table are included and this will lengthen the
 #' run time of the function. 
 #' @return a dataframe, an expanded version of the input tabl.
-#' @author Gaye, A.; Burton, P.
+#' @author Gaye, A.
+#' @export
 #' 
 lexusDS <- function(data, intervalWidth, idCol, entryCol, exitCol, statusCol, variables){
   

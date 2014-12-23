@@ -69,6 +69,6 @@ output table but it is preferable to indicate the names of
 the covariates to be included via the argument 'variables'.
 }
 \author{
-Gaye, A.; Burton, P.
+Gaye, A.
 }
 
