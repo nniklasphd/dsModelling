@@ -20,7 +20,7 @@ lexushelper2 <- function(dt, ids, exits, interval){
     if(is.na(endtime)){
       sbreaks[[i]] <- NA
     }else{
-      sbreaks[[i]] <- personBreaks(max(dt[which(dt[,ids] == uniqIds[i]), exits], na.rm=TRUE), interval)           
+      sbreaks[[i]] <- lexushelper1(max(dt[which(dt[,ids] == uniqIds[i]), exits], na.rm=TRUE), interval)           
     }
   }
   return(sbreaks)
