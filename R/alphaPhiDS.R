@@ -7,7 +7,7 @@
 #' formula.
 #' @param formula a regression formula.
 #' @param family an object of class Family.
-#' @param the name of the column that holds the cluster IDs.
+#' @param clusterID the name of the column that holds the cluster IDs.
 #' @param corstr the correlation structure.
 #' @param startBetas a character, the starting values concatenated by comma
 #' because it is not possible to use 'c()' in aggregate functions.

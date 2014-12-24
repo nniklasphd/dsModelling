@@ -4,7 +4,7 @@
 #' @details if a user sets the parameter 'weights' on the client site function \code{ds.glm} this 
 #' server side function is called to verify that the 'weights' vector does not have negative values
 #' because no negative are allowed in weights.
-#' @param weigths a numeric vector
+#' @param weights a numeric vector
 #' @return a boolean; TRUE if the vector has one or more negative values and FALSE otherwise
 #' @author Gaye, A.
 #' @export

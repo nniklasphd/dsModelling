@@ -12,8 +12,8 @@ alphaPhiDS(data, formula, family, clusterID, corstr, startBetas)
 
   \item{family}{an object of class Family.}
 
-  \item{the}{name of the column that holds the cluster
-  IDs.}
+  \item{clusterID}{the name of the column that holds the
+  cluster IDs.}
 
   \item{corstr}{the correlation structure.}
 

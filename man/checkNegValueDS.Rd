@@ -5,7 +5,7 @@
 checkNegValueDS(weights)
 }
 \arguments{
-  \item{weigths}{a numeric vector}
+  \item{weights}{a numeric vector}
 }
 \value{
 a boolean; TRUE if the vector has one or more negative
