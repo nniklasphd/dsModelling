@@ -35,7 +35,11 @@ glmDS <- function (formula, family, beta.vect, offset, weights, data) {
       offsetname <- offset
     }else{
       if(!(is.null(data))){
-        offsetname <- paste0(data, "$", offset)      
+        if(offset %in% colnames(dataTable)){
+          offsetname <- paste0(data, "$", offset)           
+        }else{
+          offsetname <- offset          
+        }
       }else{
         offsetname <- offset
       }
