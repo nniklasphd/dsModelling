@@ -64,12 +64,13 @@ glmDS <- function (formula, family, beta.vect, offset, weights, data) {
       originalFormula <- gsub(lpvariables[i], elt[length(elt)], originalFormula, fixed=TRUE)
     }
   }
-  formula2use <- as.formula(paste0(Reduce(paste, deparse(originalFormula))))    
   
   # if 'weights' are defined fit model accordingly
   if(is.null(weights)){
+    formula2use <- as.formula(paste0(Reduce(paste, deparse(originalFormula)))) 
     mod.glm.ds <- glm(formula2use, family=family, x=TRUE, control=glm.control(maxit=1), constrast=NULL, data=dataTable)
   }else{
+    formula2use <- originalFormula
     mod2eval <- paste0("glm(",formula2use,  ",family=", family, ",x=TRUE,", "control=glm.control(maxit=1),constrast=NULL,data=dataTable,weights=",weights, ")")
     mod.glm.ds <- eval(parse(text=mod2eval))
   }
