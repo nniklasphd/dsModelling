@@ -28,7 +28,7 @@ glmDS <- function (formula, family, beta.vect, offset, weights, data) {
   # this bit deals with cases where 'offset' is a loose vector or a vector within another data frame than 'data' or NULL
   # reconstruct the formula to include an offset variable if the user did specify one
   if(is.null(offset)){
-    formula2use <- Reduce(paste, deparse(formula))
+    formulatext <- Reduce(paste, deparse(formula))
   }else{
     myterms <- unlist(strsplit(offset, split='$', fixed=TRUE))
     if(length(myterms) > 1){
@@ -44,8 +44,27 @@ glmDS <- function (formula, family, beta.vect, offset, weights, data) {
         offsetname <- offset
       }
     }
-    formula2use <- as.formula(paste0(Reduce(paste, deparse(formula)), paste0(" + offset(", offsetname, ")")))    
+    formulatext <- paste0(Reduce(paste, deparse(formula)), paste0(" + offset(", offsetname, ")"))
   }
+  
+  # rewrite formula extracting variables nested in strutures like data frame or list (e.g. D$A~D$B will be re-written A~B)
+  originalFormula <- formulatext
+  formulatext <- gsub(" ", "", formulatext, fixed=TRUE)
+  formulatext <- gsub("~", "|", formulatext, fixed=TRUE)
+  formulatext <- gsub("+", "|", formulatext, fixed=TRUE)
+  formulatext <- gsub("*", "|", formulatext, fixed=TRUE)
+  formulatext <- gsub("offset(", "|", formulatext, fixed=TRUE)
+  formulatext <- gsub(")", "|", formulatext, fixed=TRUE)
+  formulatext <- gsub("||", "|", formulatext, fixed=TRUE)
+  lpvariables <- unlist(strsplit(formulatext, split="|", fixed=TRUE))
+  for(i in 1:length(lpvariables)){
+    elt <- unlist(strsplit(lpvariables[i], split="$", fixed=TRUE))
+    if(length(elt) > 1){
+      assign(elt[length(elt)], eval(parse(text=lpvariables[i])))
+      originalFormula <- gsub(lpvariables[i], elt[length(elt)], originalFormula, fixed=TRUE)
+    }
+  }
+  formula2use <- as.formula(paste0(Reduce(paste, deparse(originalFormula))))    
   
   # if 'weights' are defined fit model accordingly
   if(is.null(weights)){
