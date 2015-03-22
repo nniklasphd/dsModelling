@@ -1,8 +1,8 @@
-\name{lexushelper1}
-\alias{lexushelper1}
+\name{lexishelper1}
+\alias{lexishelper1}
 \title{Computes time breaks given the exit time}
 \usage{
-lexushelper1(stopTime, interval)
+lexishelper1(stopTime, interval)
 }
 \arguments{
   \item{stopTime}{a numeric, the exit time time.}
@@ -15,7 +15,7 @@ a list which contains the break points for each subject.
 }
 \description{
 This is an internal function required by the client.
-function \code{ds.lexus} to get the interval break points
+function \code{ds.lexis} to get the interval break points
 for each subject.
 }
 \details{

@@ -1,7 +1,7 @@
 #'
 #' @title Computes time periods of each subject
 #' @description This is an internal function required by the client.
-#' function \code{ds.lexus} to get the time periods for each subject.
+#' function \code{ds.lexis} to get the time periods for each subject.
 #' @details If the exit time information is missing one single break
 #' is returned with the a missing value.
 #' @param dt the dataset that contains the original data.
@@ -12,7 +12,7 @@
 #' @return a list which contains the individuals time periods.
 #' @author Gaye, A.
 #'
-lexushelper2 <- function(dt, ids, exits, interval){
+lexishelper2 <- function(dt, ids, exits, interval){
   uniqIds <- unique(dt[,ids])
   sbreaks <- vector("list", length(uniqIds))
   for(i in 1:length(uniqIds)){
@@ -20,7 +20,7 @@ lexushelper2 <- function(dt, ids, exits, interval){
     if(is.na(endtime)){
       sbreaks[[i]] <- NA
     }else{
-      sbreaks[[i]] <- lexushelper1(max(dt[which(dt[,ids] == uniqIds[i]), exits], na.rm=TRUE), interval)           
+      sbreaks[[i]] <- lexishelper1(max(dt[which(dt[,ids] == uniqIds[i]), exits], na.rm=TRUE), interval)           
     }
   }
   return(sbreaks)

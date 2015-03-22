@@ -1,5 +1,6 @@
 export(alphaPhiDS)
 export(checkNegValueDS)
-export(glmDS)
-export(lexusDS)
+export(glmDS1)
+export(glmDS2)
+export(lexisDS)
 export(scoreVectDS)

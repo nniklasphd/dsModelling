@@ -1,7 +1,7 @@
 #'
 #' @title Computes time breaks given the exit time
 #' @description This is an internal function required by the client.
-#' function \code{ds.lexus} to get the interval break points for each subject.
+#' function \code{ds.lexis} to get the interval break points for each subject.
 #' @details The strategy used in this function consists of walking through the 
 #' specified interval width and creating interval. Each time an interval is 
 #' created the exit time is reduced by the same magnitude of time. When the remaining
@@ -15,7 +15,7 @@
 #' @return a list which contains the break points for each subject.
 #' @author Gaye, A.
 #' 
-lexushelper1 <- function(stopTime, interval){
+lexishelper1 <- function(stopTime, interval){
   if(length(interval) < 2){
     output <- unique(c(seq(0,stopTime,by=interval),stopTime))
   }else{

@@ -1,8 +1,8 @@
-\name{lexushelper2}
-\alias{lexushelper2}
+\name{lexishelper2}
+\alias{lexishelper2}
 \title{Computes time periods of each subject}
 \usage{
-lexushelper2(dt, ids, exits, interval)
+lexishelper2(dt, ids, exits, interval)
 }
 \arguments{
   \item{dt}{the dataset that contains the original data.}
@@ -21,7 +21,7 @@ a list which contains the individuals time periods.
 }
 \description{
 This is an internal function required by the client.
-function \code{ds.lexus} to get the time periods for each
+function \code{ds.lexis} to get the time periods for each
 subject.
 }
 \details{

@@ -30,7 +30,7 @@
 #' @author Gaye, A.
 #' @export
 #' 
-lexusDS <- function(data, intervalWidth, idCol, entryCol, exitCol, statusCol, variables){
+lexisDS <- function(data, intervalWidth, idCol, entryCol, exitCol, statusCol, variables){
   
   dataset <- eval(parse(text=data))
   
@@ -43,7 +43,7 @@ lexusDS <- function(data, intervalWidth, idCol, entryCol, exitCol, statusCol, va
   
   # get each subject's time period. Here we call the function 'getBreaks' 
   # which which uses the function 'personBreaks'
-  sbreaks <- lexushelper2(dataset, idCol, exitCol, intervalWidth)
+  sbreaks <- lexishelper2(dataset, idCol, exitCol, intervalWidth)
   missingbreaks <- which(is.na(sbreaks))
   
   # get the extended period of observation (the left time points i.e. 

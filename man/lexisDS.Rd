@@ -1,8 +1,8 @@
-\name{lexusDS}
-\alias{lexusDS}
+\name{lexisDS}
+\alias{lexisDS}
 \title{Generates an expanded version of a dataset that contains survival data}
 \usage{
-lexusDS(data, intervalWidth, idCol, entryCol, exitCol, statusCol, variables)
+lexisDS(data, intervalWidth, idCol, entryCol, exitCol, statusCol, variables)
 }
 \arguments{
   \item{data}{a character, the name of the data frame that
