@@ -13,4 +13,4 @@ AggregateMethods: glmDS1,
     alphaPhiDS,
     scoreVectDS,
     checkNegValueDS
-AssignMethods: lexusDS
+AssignMethods: lexisDS
