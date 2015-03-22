@@ -9,7 +9,7 @@ Depends:
     nlme,
     dsBase
 AggregateMethods: glmDS1,
-    glmDS2
+    glmDS2,
     alphaPhiDS,
     scoreVectDS,
     checkNegValueDS
