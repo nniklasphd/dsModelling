@@ -45,7 +45,13 @@ glmDS2 <- function (formula, family, beta.vect, offset, weights, data) {
       originalFormula <- gsub(lpvariables[i], elt[length(elt)], originalFormula, fixed=TRUE)
       varnames <- append(varnames, elt[length(elt)])
     }else{
-      varnames <- append(varnames, elt)
+      if(is.null(dataTable)){
+        varnames <- append(varnames, elt)
+      }else{
+        assign(lpvariables[i], dataTable[,variables[i]])
+        varnames <- append(varnames, elt)
+      }
+
     }
   }
   varnames <- unique(varnames)
