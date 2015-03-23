@@ -46,16 +46,18 @@ glmDS2 <- function (formula, family, beta.vect, offset, weights, data) {
       varnames <- append(varnames, elt[length(elt)])
     }else{
       if(is.null(dataTable)){
-        varnames <- append(varnames, elt)
+        if(!(is.na(eval(as.numeric(elt))))){
+          varnames <- append(varnames, elt)
+        }
       }else{
-        assign(lpvariables[i], dataTable[,variables[i]])
-        varnames <- append(varnames, elt)
+        if(elt %in% colnames(dataTable)){
+          assign(elt, dataTable[,elt])
+          varnames <- append(varnames, elt)
+        }
       }
-
     }
   }
   varnames <- unique(varnames)
-  
   formula2use <- as.formula(paste0(Reduce(paste, deparse(originalFormula)))) # here we need the formula as a 'call' object
   mod.glm.ds <- glm(formula2use, family=family, x=TRUE, control=glm.control(maxit=1), contrasts=NULL, data=dataTable)
   
