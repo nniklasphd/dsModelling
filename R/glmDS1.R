@@ -12,7 +12,7 @@
 #' @author Gaye, A.; Burton, P.; Laflamme, P.
 #' @export
 #'
-glmDS1 <- function (formula, family, beta.vect, data) {
+glmDS1 <- function (formula, family, data) {
   
   # get the value of the 'data' and 'weights' parameters provided as character on the client side
   if(is.null(data)){
@@ -20,36 +20,20 @@ glmDS1 <- function (formula, family, beta.vect, data) {
   }else{
     dataTable <- eval(parse(text=data))
   }
+   
+   formulatext <- Reduce(paste, deparse(formula))
+   originalFormula <- formulatext
   
-  # rewrite formula extracting variables nested in strutures like data frame or list (e.g. D$A~D$B will be re-written A~B)
-  formulatext <- Reduce(paste, deparse(formula))
-  originalFormula <- formulatext
-  formulatext <- gsub(" ", "", formulatext, fixed=TRUE)
-  formulatext <- gsub("~", "|", formulatext, fixed=TRUE)
-  formulatext <- gsub("+", "|", formulatext, fixed=TRUE)
-  formulatext <- gsub("*", "|", formulatext, fixed=TRUE)
-  formulatext <- gsub("||", "|", formulatext, fixed=TRUE)
-  lpvariables <- unlist(strsplit(formulatext, split="|", fixed=TRUE))
-  varnames <- c()
-  for(i in 1:length(lpvariables)){
-    elt <- unlist(strsplit(lpvariables[i], split="$", fixed=TRUE))
-    if(length(elt) > 1){
-      assign(elt[length(elt)], eval(parse(text=lpvariables[i])))
-      originalFormula <- gsub(lpvariables[i], elt[length(elt)], originalFormula, fixed=TRUE)
-      varnames <- append(varnames, elt[length(elt)])
-    }else{
-      varnames <- append(varnames, elt)
-    }
-  }
-  varnames <- unique(varnames)
+   formula2use <- as.formula(paste0(Reduce(paste, deparse(originalFormula)))) # here we need the formula as a 'call' object
+   mod.glm.ds <- glm(formula2use, family=family, x=TRUE, control=glm.control(maxit=1), contrasts=NULL, data=dataTable)
+ 
   
-  # evaluate model fit on server side to identify the number of model parameters 
-  formula2use <- as.formula(paste0(Reduce(paste, deparse(originalFormula)))) # here we need the formula as a 'call' object
-  mod.glm.ds <- glm(formula2use, family=family, x=TRUE, control=glm.control(maxit=1), contrasts=NULL, data=dataTable)
+   X.mat <- as.matrix(mod.glm.ds$x)
   
-  X.mat <- as.matrix(mod.glm.ds$x)
+   dimX<-dim((X.mat))
   
-  dimX<-dim((X.mat))
+   return(list(dimX=dimX))
   
-  return(list(dimX=dimX))
+  
 }
+#glmDS1
