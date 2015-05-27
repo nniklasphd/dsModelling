@@ -13,7 +13,6 @@
 #' This can be one value (in which case all the intervals that same width) or several different values.
 #' If no value(s) is(are) provided a single default value is used. hat default value is the set to be the 
 #' 1/10th of the mean across all the studies.
-#' @param idCol a characte,r the name of the column that holds the individual IDs of the subjects.
 #' @param entryCol a character, the name of the column that holds the entry times (i.e. start of follow up).
 #' If no name is provided the default is to set all the entry times to 0 in a column named "STARTTIME".
 #' A message is then printed to alert the user as this has serious consequences if the actual entry times are 
@@ -30,9 +29,12 @@
 #' @author Gaye, A.
 #' @export
 #' 
-lexisDS <- function(data, intervalWidth, idCol, entryCol, exitCol, statusCol, variables){
+lexisDS <- function(data, intervalWidth, entryCol, exitCol, statusCol, variables){
   
   dataset <- eval(parse(text=data))
+  ID <- c(1:dim(dataset)[1])
+  dataset <- cbind(ID, dataset)
+  idCol <- "ID"
   
   # if entry time is not provided set all entry times to 0
   if(is.null(entryCol)){
