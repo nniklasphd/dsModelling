@@ -8,11 +8,12 @@ Description: DataSHIELD server site functions for statistical modelling
 Depends:
     nlme,
     dsBase
-AggregateMethods: glmDS1,
+AggregateMethods:
+    lexisDS1,
+    glmDS1,
     glmDS2,
     alphaPhiDS,
     scoreVectDS,
     checkNegValueDS
 AssignMethods:
-    lexisDS1,
     lexisDS2
