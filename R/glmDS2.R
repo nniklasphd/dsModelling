@@ -54,7 +54,7 @@ glmDS2 <- function (formula, family, beta.vect, offset, weights, data) {
   for(i in 1:length(model.variables)){
     elt <- unlist(strsplit(model.variables[i], split="$", fixed=TRUE))
     if(length(elt) > 1){
-      assign(elt[length(elt)], eval(parse(text=model.variables[i])))
+      assign(elt[length(elt)], eval(parse(text=model.variables[i]), envir = parent.frame()), envir = parent.frame())
       originalFormula <- gsub(model.variables[i], elt[length(elt)], originalFormula, fixed=TRUE)
       varnames <- append(varnames, elt[length(elt)])
     }else{
@@ -67,7 +67,7 @@ varnames <- unique(varnames)
 # and the data that underlie them. This will include a vector of 1s for the intercept and
 # any dummy variables required for factors
  
-    formula2use <- as.formula(paste0(Reduce(paste, deparse(originalFormula)))) # here we need the formula as a 'call' object
+    formula2use <- as.formula(paste0(Reduce(paste, deparse(originalFormula))), env = parent.frame()) # here we need the formula as a 'call' object
     mod.glm.ds <- glm(formula2use, family=family, x=TRUE, control=glm.control(maxit=1), contrasts=NULL, data=dataTable)
 
  X.mat.orig <- as.matrix(mod.glm.ds$x)
@@ -77,7 +77,7 @@ varnames <- unique(varnames)
 # Remove rows of offset or weights which contain NA in any Y or X variable
 # Rows where offset or weights are missing but Y and X are non-NA, remain at this stage
     cbindtext <- paste0("cbind(", paste(varnames, collapse=","), ")")
-    dtemp <- eval(parse(text=cbindtext))
+    dtemp <- eval(parse(text=cbindtext), envir = parent.frame())
     # now get the above table with no missing values (i.e. complete) and grab the offset variable (the last column)
     row.noNA.YX<-complete.cases(dtemp)
 

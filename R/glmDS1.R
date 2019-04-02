@@ -24,7 +24,7 @@ glmDS1 <- function (formula, family, data) {
    formulatext <- Reduce(paste, deparse(formula))
    originalFormula <- formulatext
   
-   formula2use <- as.formula(paste0(Reduce(paste, deparse(originalFormula)))) # here we need the formula as a 'call' object
+   formula2use <- as.formula(paste0(Reduce(paste, deparse(originalFormula))), env = parent.frame()) # here we need the formula as a 'call' object
    mod.glm.ds <- glm(formula2use, family=family, x=TRUE, control=glm.control(maxit=1), contrasts=NULL, data=dataTable)
  
   
