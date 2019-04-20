@@ -7,10 +7,14 @@ Title: DataSHIELD server site functions for statistical modelling
 Description: DataSHIELD server site functions for statistical modelling
 Depends:
     nlme,
-    dsBase
+    dsBase,
+    survival
 AggregateMethods: glmDS1,
     glmDS2,
     alphaPhiDS,
     scoreVectDS,
-    checkNegValueDS
+    checkNegValueDS,
+    coxphDS
 AssignMethods: lexisDS
+RoxygenNote: 6.1.1
+Encoding: UTF-8
