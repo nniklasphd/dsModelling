@@ -24,7 +24,7 @@ coxphDS <- function (survival_time, survival_event, terms, method, data) {
   # load survival package to be able to create the coxph model
   library("survival")
 
-  terms_str <- paste(terms, collapse = " + ")
+  terms_str <- paste(unlist(strsplit(terms, split=',')), collapse = " + ")
   formula   <- as.formula(paste0("Surv(", survival_time, ",", survival_event, ") ~ ", terms_str))
   result    <- coxph(formula, data = dataTable, method = method)
   
