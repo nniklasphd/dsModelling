@@ -4,8 +4,8 @@ Author: <datashield@obiba.org>
 Version: 4.1.1
 License: GPL-3
 Title: DataSHIELD server site functions for statistical modelling
-Description: DataSHIELD server site functions for statistical modelling.
-Imports:
+Description: DataSHIELD server site functions for statistical modelling
+Depends:
     nlme,
     dsBase,
     survival

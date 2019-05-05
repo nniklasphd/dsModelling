@@ -2,9 +2,9 @@
 % Please edit documentation in R/coxphDS.R
 \name{coxphDS}
 \alias{coxphDS}
-\title{Cox proportional-hazards model.}
+\title{Cox proportional-hazards model}
 \usage{
-coxphDS(survival_time, survival_event, terms, method, data)
+coxphDS(survival_time, survival_event, terms, data)
 }
 \arguments{
 \item{survival_time}{survivial time}
@@ -13,8 +13,6 @@ coxphDS(survival_time, survival_event, terms, method, data)
 
 \item{terms}{terms for the model}
 
-\item{method}{method for tie handling}
-
 \item{data}{a character, the name of an optional data frame containing the variables in 
 in the \code{formula}.}
 }
@@ -22,7 +20,7 @@ in the \code{formula}.}
 the coxph model.
 }
 \description{
-Cox proportional-hazards model.
+Cox proportional-hazards model
 }
 \author{
 Inberg, G.

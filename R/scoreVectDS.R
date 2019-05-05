@@ -60,6 +60,9 @@ scoreVectDS <- function(data, formula, family, clusterID, corstr, alpha, phi, st
   alpha[which(alpha >= 1 & alpha < 1.01)] <- 0.999999
   alpha[which(alpha <= -1 & alpha > -1.01)] <- -0.999999
   
+  # LOAD THE 'nlme' PACKAGE TO USE FUNCTIONS TO CREATE CORRELATION STRUCTURES
+  library("nlme")
+  
   # MATRIX IF THE CORRELATION STRUCTURE IS 'AUTOREGRESSIVE AR (1)'
   if(corstr == "ar1"){
     # THE ORDER OF THE OBSERVATIONS WITHIN A GROUP IS USED AS POSITION VARIABLE 
