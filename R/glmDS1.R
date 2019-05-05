@@ -5,7 +5,6 @@
 #' It is only called from within the client function \code{ds.glm} in the package \code{dsModellingClient}
 #' @param formula an object of class \code{formula}.
 #' @param family a character, description of the error distribution and link function to used in the model.
-#' @param beta.vect a string character: the starting values for the parameters in the linear predictor.
 #' @param data a character, the name of an optional data frame containing the variables in 
 #' in the \code{formula}. 
 #' @return a list which contains: the fitted \code{family}, a score vector and an information matrix
