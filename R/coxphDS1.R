@@ -30,5 +30,5 @@ coxphDS1 <- function (survival_time, survival_event, terms, method, data) {
   Deltac <- dataset[, n_features + 2]
   zzc    <- Conj(t.default(Zc)) %*% Zc
   
-  return(list(n.rows = n_rows, n.features = n_features, zzc = zzc))
+  return(zzc)
 }
