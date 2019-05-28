@@ -57,10 +57,9 @@ coxphDS2 <- function (survival_time, survival_event, terms, method, beta.vect, d
   thetaZtmpc <- thetaZtmpc / do.call("cbind", rep(list(thetac), n_feat))
   thetaZc    <- thetaZtmpc[indexc,]
   thetaZc    <- thetaZc * do.call("cbind", rep(list(DI), n_feat))
-  Gvc        <- sumZ - thetaZc;
-  col_sums   <- colSums(Gvc)
+  Gvc        <- sumZ - thetaZc
   
-  return(list(col.sums = col_sums))
+  return(colSums(Gvc))
   
 }
 #coxphDS2
