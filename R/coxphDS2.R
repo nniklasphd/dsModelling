@@ -25,12 +25,12 @@ coxphDS2 <- function (survival_time, survival_event, terms, method, beta.vect, d
   beta.vect <- as.numeric(unlist(strsplit(beta.vect, split=",")))
   
   # data properties
-  Zc     <- dataset[, 1:m];
-  Tc     <- dataset[, ncol(dataset) - 1]
-  Deltac <- dataset[, ncol(dataset)];
+  n_feat <- ncol(dataset) - 2
+  Zc     <- dataset[, 1:n_feat];
+  Tc     <- dataset[, n_feat + 1]
+  Deltac <- dataset[, n_feat + 2];
   Tuniq  <- unique(Tc)
   no_t   <- length(Tuniq)
-  n_features <- ncol(dataset) - 2
   
   # calculate Di, sumZ, index
   index <- DI <- c()
@@ -52,11 +52,11 @@ coxphDS2 <- function (survival_time, survival_event, terms, method, beta.vect, d
   
   ZBc        <- exp(Zc %*% beta.vect);
   thetac     <- rev(t(apply(apply(ZBc, 2, rev), 2, cumsum)))
-  thetaZtmpc <- Zc * do.call("cbind", rep(list(ZBc), n_features))
+  thetaZtmpc <- Zc * do.call("cbind", rep(list(ZBc), n_feat))
   thetaZtmpc <- apply(apply(apply(thetaZtmpc, 2, rev), 2, cumsum), 2, rev)
-  thetaZtmpc <- thetaZtmpc / do.call("cbind", rep(list(thetac), n_features))
+  thetaZtmpc <- thetaZtmpc / do.call("cbind", rep(list(thetac), n_feat))
   thetaZc    <- thetaZtmpc[indexc,]
-  thetaZc    <- thetaZc * do.call("cbind", rep(list(DI), n_features))
+  thetaZc    <- thetaZc * do.call("cbind", rep(list(DI), n_feat))
   Gvc        <- sumZc - thetaZc;
   col_sums   <- colSums(Gvc)
   
