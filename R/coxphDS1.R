@@ -12,7 +12,7 @@
 #'
 #' @author Inberg, G.
 #' 
-coxphDS <- function (survival_time, survival_event, terms, method, data) {
+coxphDS1 <- function (survival_time, survival_event, terms, method, data) {
 
   # get the value of the 'data' parameter provided as character on the client side
   if(is.null(data)){
@@ -21,12 +21,14 @@ coxphDS <- function (survival_time, survival_event, terms, method, data) {
     dataTable <- eval(parse(text=data))
   }
   
-  # load survival package to be able to create the coxph model
-  library("survival")
+  # data features 
+  n_rows     <- nrow(dataTable)
+  n_features <- ncol(dataTable) - 2
 
-  terms_str <- paste(unlist(strsplit(terms, split=',')), collapse = " + ")
-  formula   <- as.formula(paste0("Surv(", survival_time, ",", survival_event, ") ~ ", terms_str))
-  result    <- coxph(formula, data = dataTable, method = method)
+  Zc     <- dataTable[, 1:n_features];
+  Tc     <- dataTable[, n_features + 1];
+  Deltac <- dataTable[, n_features + 2];
+  zzc    <- Conj(t.default(Zc)) %*% Zc
   
-  return(result)
+  return(list(n.rows = n_rows, n.features = n_features, zzc = zzc))
 }
