@@ -16,26 +16,32 @@
 coxphDS2 <- function (survival_time, survival_event, terms, method, beta.vect, data) {
   
   if (is.null(data)){
-    dataTable <- NULL 
+    dataset <- NULL 
   } else{
-    dataTable <- eval(parse(text=data))
+    dataset <- as.matrix(eval(parse(text=data)))
   }
   
-  # number of observations
-  Tc = dataTable[, ncol(dataTable) - 1]
-  Tuniq = unique(Tc)
-  no_t = length(Tuniq)
+  #Convert beta.vect from transmittable (character) format to numeric 
+  beta.vect <- as.numeric(unlist(strsplit(beta.vect, split=",")))
+  
+  # data properties
+  Zc     <- dataset[, 1:m];
+  Tc     <- dataset[, ncol(dataset) - 1]
+  Deltac <- dataset[, ncol(dataset)];
+  Tuniq  <- unique(Tc)
+  no_t   <- length(Tuniq)
+  n_features <- ncol(dataset) - 2
   
   # calculate Di, sumZ, index
-  index <- c()
-  sumZ <- DI <- NULL
+  index <- DI <- c()
+  sumZ <- NULL
   for (k in 1:no_t) {
     T_idx <- (Tc == Tuniq[k])
     index <- c(index, sum(T_idx))
-    Delta_idx  <- (Deltac[[1]] == 1)
+    Delta_idx  <- (Deltac == 1)
     total_idx  <- (T_idx & Delta_idx)
     DI <- c(DI, sum(total_idx))
-    col_sum <- colSums(Zc[[1]][total_idx, ,drop = FALSE])
+    col_sum <- colSums(Zc[total_idx, ,drop = FALSE])
     if (is.null(sumZ)) {
       sumZ = col_sum
     } else {
@@ -44,16 +50,15 @@ coxphDS2 <- function (survival_time, survival_event, terms, method, beta.vect, d
   }
   indexc <- cumsum(c(0, index[1:(length(index)-1)])) + 1;
   
-  Zc  <- dataTable[, 1:m];
-  ZBc <- exp(Zc %*% beta.vect);
-  thetac <- rev(t(apply(apply(ZBc, 2, rev), 2, cumsum)))
-  thetaZtmpc <- Zc * do.call("cbind", rep(list(ZBc), m))
+  ZBc        <- exp(Zc %*% beta.vect);
+  thetac     <- rev(t(apply(apply(ZBc, 2, rev), 2, cumsum)))
+  thetaZtmpc <- Zc * do.call("cbind", rep(list(ZBc), n_features))
   thetaZtmpc <- apply(apply(apply(thetaZtmpc, 2, rev), 2, cumsum), 2, rev)
-  thetaZtmpc <- thetaZtmpc / do.call("cbind", rep(list(thetac), m))
-  thetaZc <- thetaZtmpc[indexc,]
-  thetaZc <- thetaZc * do.call("cbind", rep(list(DI), m))
-  Gvc <- sumZc - thetaZc;
-  col_sums <- colSums(Gvc)
+  thetaZtmpc <- thetaZtmpc / do.call("cbind", rep(list(thetac), n_features))
+  thetaZc    <- thetaZtmpc[indexc,]
+  thetaZc    <- thetaZc * do.call("cbind", rep(list(DI), n_features))
+  Gvc        <- sumZc - thetaZc;
+  col_sums   <- colSums(Gvc)
   
   return(list(col.sums = col_sums))
   
