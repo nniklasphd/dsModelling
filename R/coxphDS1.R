@@ -25,10 +25,10 @@ coxphDS1 <- function (survival_time, survival_event, terms, method, data) {
   n_rows     <- nrow(dataset)
   n_features <- ncol(dataset) - 2
 
-  Zc     <- dataset[, 1:n_features]
-  Tc     <- dataset[, n_features + 1]
-  Deltac <- dataset[, n_features + 2]
-  zzc    <- Conj(t.default(Zc)) %*% Zc
+  # Zc     <- dataset[, 1:n_features]
+  # Tc     <- dataset[, n_features + 1]
+  # Deltac <- dataset[, n_features + 2]
+  # zzc    <- Conj(t.default(Zc)) %*% Zc
   
-  return(list(n.rows = n_rows, n.features = n_features, zzc = zzc))
+  return(list(n.rows = n_rows, n.features = n_features))
 }
