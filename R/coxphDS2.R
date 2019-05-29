@@ -48,18 +48,8 @@ coxphDS2 <- function (survival_time, survival_event, terms, method, beta.vect, d
       sumZ = rbind(sumZ, col_sum)
     }
   }
-  indexc <- cumsum(c(0, index[1:(length(index)-1)])) + 1;
-  
   ZBc        <- exp(Zc %*% beta.vect);
-  thetac     <- rev(t(apply(apply(ZBc, 2, rev), 2, cumsum)))
   thetaZtmpc <- Zc * do.call("cbind", rep(list(ZBc), n_feat))
-  thetaZtmpc <- apply(apply(apply(thetaZtmpc, 2, rev), 2, cumsum), 2, rev)
-  thetaZtmpc <- thetaZtmpc / do.call("cbind", rep(list(thetac), n_feat))
-  thetaZc    <- thetaZtmpc[indexc,]
-  thetaZc    <- thetaZc * do.call("cbind", rep(list(DI), n_feat))
-  Gvc        <- sumZ - thetaZc
-  
-  return(colSums(Gvc))
-  
+  return(list(idx = index, DI = DI, sum.Z = sumZ, exp.Zc.beta = ZBc, theta.Ztmpc = thetaZtmpc))
 }
 #coxphDS2
