@@ -25,12 +25,13 @@ coxphDS2 <- function (survival_time, survival_event, terms, method, beta.vect, d
   beta.vect <- as.numeric(unlist(strsplit(beta.vect, split=",")))
   
   # data properties
-  n_feat <- ncol(dataset) - 2
-  Zc     <- dataset[, 1:n_feat];
-  Tc     <- dataset[, n_feat + 1]
-  Deltac <- dataset[, n_feat + 2];
-  Tuniq  <- unique(Tc)
-  no_t   <- length(Tuniq)
+  n_feat  <- ncol(dataset) - 2
+  dataset <- dataset[order(dataset[, n_feat+1]),]
+  Zc      <- dataset[, 1:n_feat];
+  Tc      <- dataset[, n_feat + 1]
+  Deltac  <- dataset[, n_feat + 2];
+  Tuniq   <- unique(Tc)
+  no_t    <- length(Tuniq)
   
   # calculate Di, sumZ, index
   index <- DI <- c()
