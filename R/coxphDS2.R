@@ -50,6 +50,6 @@ coxphDS2 <- function (survival_time, survival_event, terms, method, beta.vect, d
   }
   ZBc        <- exp(Zc %*% beta.vect);
   thetaZtmpc <- Zc * do.call("cbind", rep(list(ZBc), n_feat))
-  return(list(idx = index, TC = TC, DI = DI, sum.Z = sumZ, exp.Zc.beta = ZBc, theta.Ztmpc = thetaZtmpc))
+  return(list(idx = index, TC = Tc, DI = DI, sum.Z = sumZ, exp.Zc.beta = ZBc, theta.Ztmpc = thetaZtmpc))
 }
 #coxphDS2
