@@ -4,7 +4,7 @@
 #' @param survival_event survivial event
 #' @param terms terms for the model
 #' @param method method for tie handling
-#' @param beta.vect weight parameters
+#' @param tuniq unique time values
 #' @param data a character, the name of an optional data frame containing the variables in 
 #' in the \code{formula}. 
 #'
@@ -20,6 +20,9 @@ coxphDS2 <- function (survival_time, survival_event, terms, method, tuniq, data)
   } else{
     dataset <- as.matrix(eval(parse(text=data)))
   }
+  
+  #Convert tuniq from transmittable (character) format to numeric 
+  tuniq <- as.numeric(unlist(strsplit(tuniq, split=",")))
   
   # data properties
   n_features <- ncol(dataset) - 2
