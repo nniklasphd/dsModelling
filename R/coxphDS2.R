@@ -22,11 +22,11 @@ coxphDS2 <- function (survival_time, survival_event, terms, method, tuniq, data)
   }
   
   # data properties
-  n_feat  <- ncol(dataset) - 2
-  dataset <- dataset[order(dataset[, n_feat+1]),]
-  Zc      <- dataset[, 1:n_feat];
-  Tc      <- dataset[, n_feat + 1]
-  Deltac  <- dataset[, n_feat + 2];
+  n_features <- ncol(dataset) - 2
+  dataset    <- dataset[order(dataset[, n_features+1]),]
+  Zc         <- dataset[, 1:n_features];
+  Tc         <- dataset[, n_features + 1]
+  Deltac     <- dataset[, n_features + 2];
 
   # calculate index, Di, sumZ
   no_t    <- length(tuniq)
