@@ -24,7 +24,7 @@ coxphDS1 <- function (survival_time, survival_event, terms, method, data) {
   # data properties
   n_features    <- ncol(dataset) - 2
   data_features <- dataset[, 1:n_features]
-  time_values   <- dataset[, n_feat + 1]
+  time_values   <- dataset[, n_features + 1]
   ZZvc          <- Conj(t.default(data_features)) %*% data_features
   
   return(list(ZZvc = ZZvc, time.values = time_values))
