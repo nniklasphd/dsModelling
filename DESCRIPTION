@@ -15,7 +15,8 @@ AggregateMethods: glmDS1,
     scoreVectDS,
     checkNegValueDS,
     coxphDS1,
-    coxphDS2
+    coxphDS2,
+    coxphDS3
 AssignMethods: lexisDS
 RoxygenNote: 6.1.1
 Encoding: UTF-8
