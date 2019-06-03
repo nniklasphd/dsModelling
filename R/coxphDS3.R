@@ -12,7 +12,7 @@
 #'
 #' @author Inberg, G.
 #' 
-coxphDS3 <- function (survival_time, survival_event, terms, beta.vect, data) {
+coxphDS3 <- function (survival_time, terms, beta.vect, data) {
   # get the value of the 'data' parameter provided as character on the client side
   if (is.null(data)){
     dataset <- NULL 
@@ -27,8 +27,6 @@ coxphDS3 <- function (survival_time, survival_event, terms, beta.vect, data) {
   n_features    <- length(features)
   dataset       <- dataset[order(dataset[, survival_time]),]
   data_features <- dataset[, features]
-  time_values   <- dataset[, survival_time]
-  delta_values  <- dataset[, survival_event];
   ZBc           <- exp(data_features %*% beta.vect);
   thetaZtmpc    <- data_features * do.call("cbind", rep(list(ZBc), n_features))
   
