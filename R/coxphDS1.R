@@ -11,7 +11,7 @@
 #'
 #' @author Inberg, G.
 #' 
-coxphDS1 <- function (survival_time, survival_event, terms, method, data) {
+coxphDS1 <- function (survival_time, survival_event, terms, data) {
   # get the value of the 'data' parameter provided as character on the client side
   if(is.null(data)){
     dataset <- NULL 

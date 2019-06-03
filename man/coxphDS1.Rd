@@ -4,7 +4,7 @@
 \alias{coxphDS1}
 \title{Distributed Cox model learning, local initialization.}
 \usage{
-coxphDS1(survival_time, survival_event, terms, method, data)
+coxphDS1(survival_time, survival_event, terms, data)
 }
 \arguments{
 \item{survival_time}{survivial time}
