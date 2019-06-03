@@ -19,7 +19,7 @@ coxphDS1 <- function (survival_time, terms, data) {
   }
   
   #Convert parameters from transmittable (character) format to numeric 
-  features      <- as.numeric(unlist(strsplit(terms, split=",")))
+  features      <- unlist(strsplit(terms, split=","))
   
   dataset       <- dataset[order(dataset[, survival_time]),]
   data_features <- dataset[, features]

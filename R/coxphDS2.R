@@ -22,7 +22,7 @@ coxphDS2 <- function (survival_time, survival_event, terms, tuniq, data) {
   
   #Convert parameters from transmittable (character) format to numeric 
   tuniq         <- as.numeric(unlist(strsplit(tuniq, split=",")))
-  features      <- as.numeric(unlist(strsplit(terms, split=",")))
+  features      <- unlist(strsplit(terms, split=","))
   
   dataset       <- dataset[order(dataset[, survival_time]),]
   data_features <- dataset[, features]

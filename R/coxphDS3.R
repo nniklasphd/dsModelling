@@ -22,7 +22,7 @@ coxphDS3 <- function (survival_time, terms, beta.vect, data) {
   
   #Convert parameters from transmittable (character) format to numeric   
   beta.vect     <- as.numeric(unlist(strsplit(beta.vect, split=",")))
-  features      <- as.numeric(unlist(strsplit(terms, split=",")))
+  features      <- unlist(strsplit(terms, split=","))
   
   n_features    <- length(features)
   dataset       <- dataset[order(dataset[, survival_time]),]
