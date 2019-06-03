@@ -4,7 +4,7 @@
 \alias{coxphDS3}
 \title{Cox proportional-hazards model.}
 \usage{
-coxphDS3(survival_time, survival_event, terms, method, beta.vect, data)
+coxphDS3(survival_time, survival_event, terms, beta.vect, data)
 }
 \arguments{
 \item{survival_time}{survivial time}
@@ -13,15 +13,13 @@ coxphDS3(survival_time, survival_event, terms, method, beta.vect, data)
 
 \item{terms}{terms for the model}
 
-\item{method}{method for tie handling}
-
-\item{beta.vect}{weight parameters}
+\item{beta.vect}{model weight parameters}
 
 \item{data}{a character, the name of an optional data frame containing the variables in 
 in the \code{formula}.}
 }
 \value{
-the coxph model.
+a list of aggregated statistics based on local data.
 }
 \description{
 Cox proportional-hazards model.

@@ -2,9 +2,9 @@
 % Please edit documentation in R/coxphDS2.R
 \name{coxphDS2}
 \alias{coxphDS2}
-\title{Cox proportional-hazards model.}
+\title{Distributed Cox model learning, local initialization based on global unique time values.}
 \usage{
-coxphDS2(survival_time, survival_event, terms, method, tuniq, data)
+coxphDS2(survival_time, survival_event, terms, tuniq, data)
 }
 \arguments{
 \item{survival_time}{survivial time}
@@ -13,18 +13,16 @@ coxphDS2(survival_time, survival_event, terms, method, tuniq, data)
 
 \item{terms}{terms for the model}
 
-\item{method}{method for tie handling}
-
 \item{tuniq}{unique time values}
 
 \item{data}{a character, the name of an optional data frame containing the variables in 
 in the \code{formula}.}
 }
 \value{
-the coxph model.
+a list of aggregated statistics based on local data.
 }
 \description{
-Cox proportional-hazards model.
+Distributed Cox model learning, local initialization based on global unique time values.
 }
 \author{
 Inberg, G.

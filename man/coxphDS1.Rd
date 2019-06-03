@@ -2,7 +2,7 @@
 % Please edit documentation in R/coxphDS1.R
 \name{coxphDS1}
 \alias{coxphDS1}
-\title{Cox proportional-hazards model.}
+\title{Distributed Cox model learning, local initialization.}
 \usage{
 coxphDS1(survival_time, survival_event, terms, method, data)
 }
@@ -13,16 +13,14 @@ coxphDS1(survival_time, survival_event, terms, method, data)
 
 \item{terms}{terms for the model}
 
-\item{method}{method for tie handling}
-
 \item{data}{a character, the name of an optional data frame containing the variables in 
 in the \code{formula}.}
 }
 \value{
-the coxph model.
+a list of time values and aggregated statistics based on local data.
 }
 \description{
-Cox proportional-hazards model.
+Distributed Cox model learning, local initialization.
 }
 \author{
 Inberg, G.
