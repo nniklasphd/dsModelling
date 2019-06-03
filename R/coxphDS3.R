@@ -20,16 +20,17 @@ coxphDS3 <- function (survival_time, survival_event, terms, beta.vect, data) {
     dataset <- as.matrix(eval(parse(text=data)))
   }
   
-  #Convert beta.vect from transmittable (character) format to numeric   
-  beta.vect <- as.numeric(unlist(strsplit(beta.vect, split=",")))
+  #Convert parameters from transmittable (character) format to numeric   
+  beta.vect     <- as.numeric(unlist(strsplit(beta.vect, split=",")))
+  data_features <- as.numeric(unlist(strsplit(terms, split=",")))
   
-  # data properties
-  n_features <- ncol(dataset) - 2
-  dataset    <- dataset[order(dataset[, n_features+1]),]
-  Zc         <- dataset[, 1:n_features]
-
-  ZBc        <- exp(Zc %*% beta.vect);
-  thetaZtmpc <- Zc * do.call("cbind", rep(list(ZBc), n_features))
+  n_features    <- length(data_features)
+  dataset       <- dataset[order(dataset[, survival_time]),]
+  data_features <- dataset[, 1:n_features]
+  time_values   <- dataset[, survival_time]
+  delta_values  <- dataset[, survival_event];
+  ZBc           <- exp(data_features %*% beta.vect);
+  thetaZtmpc    <- data_features * do.call("cbind", rep(list(ZBc), n_features))
   
   return(list(exp.Zc.beta = ZBc, theta.Ztmpc = thetaZtmpc))
 }

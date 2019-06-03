@@ -18,10 +18,9 @@ coxphDS1 <- function (survival_time, terms, data) {
     dataset <- as.matrix(eval(parse(text=data)))
   }
   
-  #Convert terms from transmittable (character) format to numeric 
+  #Convert parameters from transmittable (character) format to numeric 
   data_features <- as.numeric(unlist(strsplit(terms, split=",")))
   
-  # data properties
   n_features    <- length(data_features)
   dataset       <- dataset[order(dataset[, survival_time]),]
   data_features <- dataset[, 1:n_features]

@@ -20,27 +20,27 @@ coxphDS2 <- function (survival_time, survival_event, terms, tuniq, data) {
     dataset <- as.matrix(eval(parse(text=data)))
   }
   
-  #Convert tuniq from transmittable (character) format to numeric 
-  tuniq <- as.numeric(unlist(strsplit(tuniq, split=",")))
+  #Convert parameters from transmittable (character) format to numeric 
+  tuniq         <- as.numeric(unlist(strsplit(tuniq, split=",")))
+  data_features <- as.numeric(unlist(strsplit(terms, split=",")))
   
-  # data properties
-  n_features <- ncol(dataset) - 2
-  dataset    <- dataset[order(dataset[, n_features+1]),]
-  Zc         <- dataset[, 1:n_features];
-  Tc         <- dataset[, n_features + 1]
-  Deltac     <- dataset[, n_features + 2];
+  n_features    <- length(data_features)
+  dataset       <- dataset[order(dataset[, survival_time]),]
+  data_features <- dataset[, 1:n_features]
+  time_values   <- dataset[, survival_time]
+  delta_values  <- dataset[, survival_event];
 
   # calculate index, Di, sumZ
   no_t  <- length(tuniq)
   index <- DI <- c()
   sumZ  <- NULL
   for (k in 1:no_t) {
-    T_idx      <- (Tc == tuniq[k])
+    T_idx      <- (time_values == tuniq[k])
     index      <- c(index, sum(T_idx))
-    Delta_idx  <- (Deltac == 1)
+    Delta_idx  <- (delta_values == 1)
     total_idx  <- (T_idx & Delta_idx)
     DI         <- c(DI, sum(total_idx))
-    col_sum    <- colSums(Zc[total_idx, ,drop = FALSE])
+    col_sum    <- colSums(data_features[total_idx, ,drop = FALSE])
     if (is.null(sumZ)) {
       sumZ <- col_sum
     } else {
