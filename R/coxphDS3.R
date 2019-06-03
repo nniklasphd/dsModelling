@@ -33,3 +33,4 @@ coxphDS3 <- function (survival_time, survival_event, terms, beta.vect, data) {
   
   return(list(exp.Zc.beta = ZBc, theta.Ztmpc = thetaZtmpc))
 }
+#coxphDS3

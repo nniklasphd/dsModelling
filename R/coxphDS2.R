@@ -49,3 +49,5 @@ coxphDS2 <- function (survival_time, survival_event, terms, tuniq, data) {
   }
   return(list(index = index, DI = DI, sum.Z = sumZ))
 }
+#coxphDS2
+
