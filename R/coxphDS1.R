@@ -19,11 +19,11 @@ coxphDS1 <- function (survival_time, terms, data) {
   }
   
   #Convert parameters from transmittable (character) format to numeric 
-  data_features <- as.numeric(unlist(strsplit(terms, split=",")))
+  features      <- as.numeric(unlist(strsplit(terms, split=",")))
   
   n_features    <- length(data_features)
   dataset       <- dataset[order(dataset[, survival_time]),]
-  data_features <- dataset[, 1:n_features]
+  data_features <- dataset[, features]
   time_values   <- dataset[, survival_time]
   ZZvc          <- Conj(t.default(data_features)) %*% data_features
   
