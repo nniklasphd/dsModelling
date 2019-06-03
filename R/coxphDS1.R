@@ -1,7 +1,6 @@
 #' @title Distributed Cox model learning, local initialization.
 #'
 #' @param survival_time survivial time
-#' @param survival_event survivial event
 #' @param terms terms for the model
 #' @param data a character, the name of an optional data frame containing the variables in 
 #' in the \code{formula}. 
@@ -11,7 +10,7 @@
 #'
 #' @author Inberg, G.
 #' 
-coxphDS1 <- function (survival_time, survival_event, terms, data) {
+coxphDS1 <- function (survival_time, terms, data) {
   # get the value of the 'data' parameter provided as character on the client side
   if(is.null(data)){
     dataset <- NULL 
@@ -19,11 +18,14 @@ coxphDS1 <- function (survival_time, survival_event, terms, data) {
     dataset <- as.matrix(eval(parse(text=data)))
   }
   
+  #Convert terms from transmittable (character) format to numeric 
+  data_features <- as.numeric(unlist(strsplit(terms, split=",")))
+  
   # data properties
-  n_features    <- ncol(dataset) - 2
-  dataset       <- dataset[order(dataset[, n_features+1]),]
+  n_features    <- length(data_features)
+  dataset       <- dataset[order(dataset[, survival_time]),]
   data_features <- dataset[, 1:n_features]
-  time_values   <- dataset[, n_features + 1]
+  time_values   <- dataset[, survival_time]
   ZZvc          <- Conj(t.default(data_features)) %*% data_features
   
   return(list(ZZvc = ZZvc, time.values = time_values))
