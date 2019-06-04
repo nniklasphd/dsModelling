@@ -4,19 +4,18 @@
 \alias{coxphDS2}
 \title{Distributed Cox model learning, local initialization based on global unique time values.}
 \usage{
-coxphDS2(survival_time, survival_event, terms, tuniq, data)
+coxphDS2(data, survival_time, survival_event, terms, tuniq)
 }
 \arguments{
-\item{survival_time}{survivial time}
+\item{data}{a character, the name of the data frame that holds the data.}
 
-\item{survival_event}{survivial event}
+\item{survival_time}{character, the survivial time variable}
 
-\item{terms}{terms for the model}
+\item{survival_event}{character, the survivial event variable}
 
-\item{tuniq}{unique time values}
+\item{terms}{comma separated string containing the terms for the model}
 
-\item{data}{a character, the name of an optional data frame containing the variables in 
-in the \code{formula}.}
+\item{tuniq}{comma separated string containing the unique time values}
 }
 \value{
 a list of aggregated statistics based on local data.

@@ -4,15 +4,14 @@
 \alias{coxphDS1}
 \title{Distributed Cox model learning, local initialization.}
 \usage{
-coxphDS1(survival_time, terms, data)
+coxphDS1(data, survival_time, terms)
 }
 \arguments{
-\item{survival_time}{survivial time}
+\item{data}{a character, the name of the data frame that holds the data.}
 
-\item{terms}{terms for the model}
+\item{survival_time}{character, the survivial time variable}
 
-\item{data}{a character, the name of an optional data frame containing the variables in 
-in the \code{formula}.}
+\item{terms}{comma separated string containing the terms for the model}
 }
 \value{
 a list of time values and aggregated statistics based on local data.

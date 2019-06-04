@@ -1,16 +1,14 @@
 #' @title Distributed Cox model learning, local initialization.
 #'
-#' @param survival_time survivial time
-#' @param terms terms for the model
-#' @param data a character, the name of an optional data frame containing the variables in 
-#' in the \code{formula}. 
+#' @param data a character, the name of the data frame that holds the data.
+#' @param survival_time character, the survivial time variable
+#' @param terms comma separated string containing the terms for the model
 #'
 #' @return a list of time values and aggregated statistics based on local data.
-#' @export
-#'
 #' @author Inberg, G.
+#' @export
 #' 
-coxphDS1 <- function (survival_time, terms, data) {
+coxphDS1 <- function (data, survival_time, terms) {
   # get the value of the 'data' parameter provided as character on the client side
   if(is.null(data)){
     dataset <- NULL 

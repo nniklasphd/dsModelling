@@ -2,27 +2,24 @@
 % Please edit documentation in R/coxphDS3.R
 \name{coxphDS3}
 \alias{coxphDS3}
-\title{Cox proportional-hazards model.}
+\title{Distributed Cox model learning step3, calculate aggregated statistics..}
 \usage{
-coxphDS3(survival_time, survival_event, terms, beta.vect, data)
+coxphDS3(data, survival_time, terms, beta.vect)
 }
 \arguments{
-\item{survival_time}{survivial time}
+\item{data}{a character, the name of the data frame that holds the data.}
 
-\item{survival_event}{survivial event}
+\item{survival_time}{character, the survivial time variable}
 
-\item{terms}{terms for the model}
+\item{terms}{comma separated string containing the terms for the model}
 
-\item{beta.vect}{model weight parameters}
-
-\item{data}{a character, the name of an optional data frame containing the variables in 
-in the \code{formula}.}
+\item{beta.vect}{comma separated string containing the model weight parameters}
 }
 \value{
 a list of aggregated statistics based on local data.
 }
 \description{
-Cox proportional-hazards model.
+Distributed Cox model learning step3, calculate aggregated statistics..
 }
 \author{
 Inberg, G.

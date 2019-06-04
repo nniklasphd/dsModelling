@@ -1,18 +1,16 @@
 #' @title Distributed Cox model learning, local initialization based on global unique time values.
 #'
-#' @param survival_time survivial time
-#' @param survival_event survivial event
-#' @param terms terms for the model
-#' @param tuniq unique time values
-#' @param data a character, the name of an optional data frame containing the variables in 
-#' in the \code{formula}. 
+#' @param data a character, the name of the data frame that holds the data.
+#' @param survival_time character, the survivial time variable
+#' @param survival_event character, the survivial event variable
+#' @param terms comma separated string containing the terms for the model
+#' @param tuniq comma separated string containing the unique time values
 #'
 #' @return a list of aggregated statistics based on local data.
-#' @export
-#'
 #' @author Inberg, G.
+#' @export
 #' 
-coxphDS2 <- function (survival_time, survival_event, terms, tuniq, data) {
+coxphDS2 <- function (data, survival_time, survival_event, terms, tuniq) {
   # get the value of the 'data' parameter provided as character on the client side
   if (is.null(data)){
     dataset <- NULL 
