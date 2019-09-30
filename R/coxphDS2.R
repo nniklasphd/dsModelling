@@ -42,7 +42,7 @@ coxphDS2 <- function (data, survival_time, survival_event, terms, tuniq) {
 	if (length(time_values[time_values==tuniq[i]&delta_values==1])==0)
 		s[i,] <- rep(0,m)
 	d[i] <- length(time_values[time_values==tuniq[i]&delta_values==1])
-	index[i] <- length(time_values[time_values<tuniq[i]])+1
+	index[i] <- length(time_values[time_values<tuniq[i]])
   }
   
   
