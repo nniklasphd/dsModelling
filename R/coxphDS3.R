@@ -29,7 +29,8 @@ coxphDS3 <- function (data, survival_time, terms, beta.vect, index_str) {
   #thetaZtmpc    <- data_features * do.call("cbind", rep(list(ZBc), n_features))
   temp1 <- c(exp(data_features%*%beta.vect))
   temp2 <- rev(cumsum(rev(temp1)))
-  sum_matrix <- (apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev)/temp2)[index,]
+  #sum_matrix <- (apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev)/temp2)[index,]
+  sum_matrix <- data_features*temp1
   
   #zz <- array(0,c(dim(dataset)[1],n_features,n_features))
   #for(i in 1:(dim(dataset)[1])){zz[i,,] <- data_features[i,] %*% t(data_features[i,])}
