@@ -32,7 +32,7 @@ coxphDS3 <- function (data, survival_time, terms, beta.vect, index_str) {
   sum_matrix <- (apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev)/temp2)[index,]
   
   zz <- array(0,c(dim(dataset)[1],n_features,n_features))
-  for(i in 1:(dim(dataset)[1])){zz[i,,] <- data_features[i,] %*% t(data_features[i,])}
+  #for(i in 1:(dim(dataset)[1])){zz[i,,] <- data_features[i,] %*% t(data_features[i,])}
   sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)[index,,]
 
   
