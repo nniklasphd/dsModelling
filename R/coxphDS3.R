@@ -28,7 +28,7 @@ coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, dat
   time_values   <- dataset[, survival_time]
   delta_values  <- dataset[, survival_event]
   tuniq         <- unique(time_values)
-  n <- length(time_values)
+  n <- length(tuniq)
   index <- rep(0,n)
   for(i in 1:n){index[i]<- length(time_values[time_values==tuniq[i]&delta_values==1])+1}
   
