@@ -31,7 +31,7 @@ coxphDS2 <- function (data, survival_time, survival_event, terms, tuniq) {
   m <- length(features)
   s <- matrix(0,n,m)
   d <- rep(0,n)
-  index <- rep(0,n)
+  #index <- rep(0,n)
  
   for(i in 1:n)
   {
@@ -42,7 +42,7 @@ coxphDS2 <- function (data, survival_time, survival_event, terms, tuniq) {
 	if (length(time_values[time_values==tuniq[i]&delta_values==1])==0)
 		s[i,] <- rep(0,m)
 	d[i] <- length(time_values[time_values==tuniq[i]&delta_values==1])
-	index[i] <- length(time_values[time_values<tuniq[i]])
+	#index[i] <- length(time_values[time_values<tuniq[i]])
   }
   
   
@@ -67,7 +67,8 @@ coxphDS2 <- function (data, survival_time, survival_event, terms, tuniq) {
   #    sumZ <- rbind(sumZ, col_sum)
   #  }
   #}
-  return(list(index = index, DI = d, sum.Z = s))
+  #return(list(index = index, DI = d, sum.Z = s))
+  return(list(DI = d, sum.Z = s))
 }
 #coxphDS2
 
