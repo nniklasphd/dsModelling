@@ -9,7 +9,7 @@
 #' @author Niklas, N.
 #' @export
 #' 
-coxphDS3 <- function (data, survival_time, terms, beta.vect, index_str) {
+coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, data_times_str) {
   # get the value of the 'data' parameter provided as character on the client side
   if (is.null(data)){
     dataset <- NULL 
@@ -19,26 +19,38 @@ coxphDS3 <- function (data, survival_time, terms, beta.vect, index_str) {
   
   #Convert parameters from transmittable (character) format to numeric   
   beta.vect     <- as.numeric(unlist(strsplit(beta.vect, split=",")))
-  index			    <- as.numeric(unlist(strsplit(index_str, split=",")))
+  data_times    <- as.numeric(unlist(strsplit(data_times_str, split=",")))
   features      <- unlist(strsplit(terms, split=","))
-  
+    
   n_features    <- length(features)
   dataset       <- dataset[order(dataset[, survival_time]),]
   data_features <- dataset[, features]
+  time_values   <- dataset[, survival_time]
+  delta_values  <- dataset[, survival_event]
+  tuniq         <- unique(time_values)
+  n <- length(time_values)
+  index <- rep(0,n)
+  for(i in 1:n){index[i]<- length(time_values[time_values==tuniq[i]&delta_values==1])+1}
+  
   temp1 <- c(exp(data_features%*%beta.vect))
   temp2 <- rev(cumsum(rev(temp1)))
-  #sum_matrix <- (apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev)/temp2)[index,]
-  sum_matrix <- apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev)/temp2
+  sum_matrix <- (apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev)/temp2)[index,]
+  #sum_matrix <- apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev)/temp2
     
   zz <- array(0,c(dim(dataset)[1],n_features,n_features))
   for(i in 1:(dim(dataset)[1])){zz[i,,] <- data_features[i,] %*% t(data_features[i,])}
-  #sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)[index,,]
-  sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)
+  sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)[index,,]
+  #sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)
 
-  temp2 <- rep(0,n_features)
-  sum_matrix <- matrix(0,length(index),n_features)
-  sum_array <- array(0,c(length(index),n_features,n_features))
+  tmp1 <- matrix(0,length(data_times),n_features)
+  tmp2 <- array(0,c(length(data_times),n_features,n_features))
   
-  return(list(ebz = temp2, zebz = sum_matrix, zzebz = sum_array))
+  tmp1[is.element(data_times,tuniq),] <- sum_matrix
+  tmp2[is.element(data_times,tuniq),,] <- sum_array
+  
+  sum_matrix <- tmp1
+  sum_array <- tmp2
+  
+  return(list(zebz = sum_matrix, zzebz = sum_array))
 }
 #coxphDS3
