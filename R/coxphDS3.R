@@ -9,7 +9,7 @@
 #' @author Inberg, G.
 #' @export
 #' 
-coxphDS3 <- function (data, survival_time, terms, beta.vect, index) {
+coxphDS3 <- function (data, survival_time, terms, beta.vect, index_str) {
   # get the value of the 'data' parameter provided as character on the client side
   if (is.null(data)){
     dataset <- NULL 
@@ -19,7 +19,7 @@ coxphDS3 <- function (data, survival_time, terms, beta.vect, index) {
   
   #Convert parameters from transmittable (character) format to numeric   
   beta.vect     <- as.numeric(unlist(strsplit(beta.vect, split=",")))
-  #index			    <- as.numeric(unlist(strsplit(index_str, split=",")))
+  index			    <- as.numeric(unlist(strsplit(index_str, split=",")))
   features      <- unlist(strsplit(terms, split=","))
   
   n_features    <- length(features)
