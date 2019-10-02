@@ -6,7 +6,7 @@
 #' @param beta.vect comma separated string containing the model weight parameters
 #'
 #' @return a list of aggregated statistics based on local data.
-#' @author Inberg, G.
+#' @author Niklas, N.
 #' @export
 #' 
 coxphDS3 <- function (data, survival_time, terms, beta.vect, index_str) {
@@ -25,23 +25,20 @@ coxphDS3 <- function (data, survival_time, terms, beta.vect, index_str) {
   n_features    <- length(features)
   dataset       <- dataset[order(dataset[, survival_time]),]
   data_features <- dataset[, features]
-  #ZBc           <- exp(data_features %*% beta.vect);
-  #thetaZtmpc    <- data_features * do.call("cbind", rep(list(ZBc), n_features))
   temp1 <- c(exp(data_features%*%beta.vect))
   temp2 <- rev(cumsum(rev(temp1)))
   #sum_matrix <- (apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev)/temp2)[index,]
   sum_matrix <- apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev)/temp2
-  sum_matrix <- sum_matrix[c(index),]
-  
-  #zz <- array(0,c(dim(dataset)[1],n_features,n_features))
-  #for(i in 1:(dim(dataset)[1])){zz[i,,] <- data_features[i,] %*% t(data_features[i,])}
+    
+  zz <- array(0,c(dim(dataset)[1],n_features,n_features))
+  for(i in 1:(dim(dataset)[1])){zz[i,,] <- data_features[i,] %*% t(data_features[i,])}
   #sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)[index,,]
+  sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)
 
   temp2 <- rep(0,n_features)
   sum_matrix <- matrix(0,length(index),n_features)
   sum_array <- array(0,c(length(index),n_features,n_features))
   
-  #return(list(exp.Zc.beta = ZBc, theta.Ztmpc = thetaZtmpc))
   return(list(ebz = temp2, zebz = sum_matrix, zzebz = sum_array))
 }
 #coxphDS3
