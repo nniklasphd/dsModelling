@@ -29,16 +29,10 @@ coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, dat
   delta_values  <- dataset[, survival_event]
   tuniq         <- unique(time_values)
   n <- length(tuniq)
-  index <- rep(0,n)
-  #for(i in 1:n){index[i]<- length(time_values[time_values==tuniq[i]&delta_values==1])+1}
-  for(i in 1:n){index[i]<- length(time_values[time_values<tuniq[i]])+1}
-  
-  temp1 <- c(exp(data_features%*%beta.vect))
-  temp2 <- rev(cumsum(rev(temp1)))
-  temp2 <- temp2[index]
-  sum_matrix <- (apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev))[index,]
-  #sum_matrix <- apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev)/temp2[index,]
-    
+  #index <- rep(0,n)
+  index <- list()
+  length(index) <- length(data_times)
+	
   zz <- array(0,c(dim(dataset)[1],n_features,n_features))
   #for(i in 1:(dim(dataset)[1])){zz[i,,] <- data_features[i,] %*% t(data_features[i,])}
   for(i in 1:n_features)
@@ -49,20 +43,39 @@ coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, dat
 			}
 	}
 	
-  sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev))[index,,]
+  #for(i in 1:n){index[i]<- length(time_values[time_values==tuniq[i]&delta_values==1])+1}
+  #for(i in 1:n){index[i]<- length(time_values[time_values<tuniq[i]])+1}
+  for(i in 1:length(data_times)){index[[i]] <- which(time_values<data_times[i])+1}
+  
+  temp1 <- c(exp(data_features%*%beta.vect))
+  temp2 <- rep(0,length(data_times))
+  sum_matrix <- matrix(0,length(data_times),n_features)
+  sum_array <- array(0,c(length(data_times),n_features,n_features))
+  for(i in 1:length(data_times))
+  {
+	  temp2[i] <- sum(temp1[index[[i]]])
+	  sum_matrix[i,] <- colSums((data_features*temp1)[index[[i]]])
+	  sum_array[i,,] <- colsums((zz*temp1)[index[[i]]],dims=1)
+  }
+  #temp2 <- rev(cumsum(rev(temp1)))
+  #temp2 <- temp2[index]
+  #sum_matrix <- (apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev))[index,]
+  #sum_matrix <- apply(apply(apply(data_features*temp1,2,rev),2,cumsum),2,rev)/temp2[index,]
+    
+  #sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev))[index,,]
   #sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)[index,,]
 
-  tmp0 <- rep(0,length(data_times))
-  tmp1 <- matrix(0,length(data_times),n_features)
-  tmp2 <- array(0,c(length(data_times),n_features,n_features))
+  #tmp0 <- rep(0,length(data_times))
+  #tmp1 <- matrix(0,length(data_times),n_features)
+  #tmp2 <- array(0,c(length(data_times),n_features,n_features))
   
-  tmp0[is.element(data_times,tuniq)] <- temp2
-  tmp1[is.element(data_times,tuniq),] <- sum_matrix
-  tmp2[is.element(data_times,tuniq),,] <- sum_array
+  #tmp0[is.element(data_times,tuniq)] <- temp2
+  #tmp1[is.element(data_times,tuniq),] <- sum_matrix
+  #tmp2[is.element(data_times,tuniq),,] <- sum_array
   
-  temp2 <- tmp0
-  sum_matrix <- tmp1
-  sum_array <- tmp2
+  #temp2 <- tmp0
+  #sum_matrix <- tmp1
+  #sum_array <- tmp2
   
   #sum_matrix <- matrix(0,length(data_times),n_features)
   #sum_array <- array(0,c(length(data_times),n_features,n_features))
