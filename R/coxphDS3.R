@@ -39,8 +39,8 @@ coxphDS3 <- function (data, survival_time, terms, beta.vect, index_str) {
 
   temp2 <- rep(0,n_features)
   sum_matrix <- matrix(0,length(index),n_features)
-  sum_matrix <- sum_matrix[index,]
   sum_array <- array(0,c(length(index),n_features,n_features))
+  sum_array <- sum_array[index,,]
   
   #return(list(exp.Zc.beta = ZBc, theta.Ztmpc = thetaZtmpc))
   return(list(ebz = temp2, zebz = sum_matrix, zzebz = sum_array))
