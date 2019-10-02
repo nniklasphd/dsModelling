@@ -39,20 +39,20 @@ coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, dat
     
   zz <- array(0,c(dim(dataset)[1],n_features,n_features))
   for(i in 1:(dim(dataset)[1])){zz[i,,] <- data_features[i,] %*% t(data_features[i,])}
-  #sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)[index,,]
-  sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)
+  sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)[index,,]
+  #sum_array <- (apply(apply(apply(zz*temp1,c(2,3),rev),c(2,3),cumsum),c(2,3),rev)/temp2)
 
-  #tmp1 <- matrix(0,length(data_times),n_features)
-  #tmp2 <- array(0,c(length(data_times),n_features,n_features))
+  tmp1 <- matrix(0,length(data_times),n_features)
+  tmp2 <- array(0,c(length(data_times),n_features,n_features))
   
-  #tmp1[is.element(data_times,tuniq),] <- sum_matrix
-  #tmp2[is.element(data_times,tuniq),,] <- sum_array
+  tmp1[is.element(data_times,tuniq),] <- sum_matrix
+  tmp2[is.element(data_times,tuniq),,] <- sum_array
   
-  #sum_matrix <- tmp1
-  #sum_array <- tmp2
+  sum_matrix <- tmp1
+  sum_array <- tmp2
   
-  sum_matrix <- matrix(0,length(data_times),n_features)
-  sum_array <- array(0,c(length(data_times),n_features,n_features))
+  #sum_matrix <- matrix(0,length(data_times),n_features)
+  #sum_array <- array(0,c(length(data_times),n_features,n_features))
   
   return(list(zebz = sum_matrix, zzebz = sum_array))
 }
