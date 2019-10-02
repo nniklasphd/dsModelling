@@ -30,7 +30,8 @@ coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, dat
   tuniq         <- unique(time_values)
   n <- length(tuniq)
   index <- rep(0,n)
-  for(i in 1:n){index[i]<- length(time_values[time_values==tuniq[i]&delta_values==1])+1}
+  #for(i in 1:n){index[i]<- length(time_values[time_values==tuniq[i]&delta_values==1])+1}
+  for(i in 1:n){index[i]<- length(time_values[time_values<tuniq[i]])+1}
   
   temp1 <- c(exp(data_features%*%beta.vect))
   temp2 <- rev(cumsum(rev(temp1)))
