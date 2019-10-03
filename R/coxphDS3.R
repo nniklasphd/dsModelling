@@ -41,7 +41,7 @@ coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, dat
 	
   #for(i in 1:n){index[i]<- length(time_values[time_values==tuniq[i]&delta_values==1])+1}
   #for(i in 1:n){index[i]<- length(time_values[time_values<tuniq[i]])+1}
-  for(i in 1:length(data_times)){index[[i]] <-  which(!(time_values<data_times[i] & delta_values==0)&!(time_values<=data_times[i] & delta_values==1))}
+  #for(i in 1:length(data_times)){index[[i]] <-  which(!(time_values<data_times[i] & delta_values==0)&!(time_values<=data_times[i] & delta_values==1))}
   
   temp1 <- c(exp(data_features%*%beta.vect))
   ebz <- rep(0,length(data_times))
