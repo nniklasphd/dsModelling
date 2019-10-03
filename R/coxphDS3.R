@@ -56,7 +56,7 @@ coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, dat
 	  zzebz[i,,] <- (zz*temp1)[ind,,]
 	  } else {
           zebz[i,] <- colSums((data_features*temp1)[ind,])
-	  zzebz[i,,] <- colsums((zz*temp1)[ind,,],dims=1)
+	  zzebz[i,,] <- colSums((zz*temp1)[ind,,],dims=1)
           }
   }
   #temp2 <- rev(cumsum(rev(temp1)))
