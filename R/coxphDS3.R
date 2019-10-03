@@ -49,7 +49,8 @@ coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, dat
   zzebz <- array(0,c(length(data_times),n_features,n_features))
   for(i in 1:length(data_times))
   {
-	  ind <- !(time_values<data_times[i] & delta_values==0) & !(time_values<=data_times[i] & delta_values==1)
+	  #ind <- !(time_values<data_times[i] & delta_values==0) & !(time_values<=data_times[i] & delta_values==1)
+	  ind <- !(time_values<data_times[i])
 	  ebz[i] <- sum(temp1[ind])
 	  if(sum(ind)==1){
 	  zebz[i,] <- (data_features*temp1)[ind,]
