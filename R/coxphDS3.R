@@ -29,12 +29,8 @@ coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, dat
   delta_values  <- dataset[, survival_event]
   tuniq         <- unique(time_values)
   n <- length(tuniq)
-  #index <- rep(0,n)
-  index <- list()
-  length(index) <- length(data_times)
-	
+ 	
   zz <- array(0,c(dim(dataset)[1],n_features,n_features))
-  #for(i in 1:(dim(dataset)[1])){zz[i,,] <- data_features[i,] %*% t(data_features[i,])}
   for(i in 1:n_features)
 	{
 		for(j in 1:n_features)
@@ -45,17 +41,23 @@ coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, dat
 	
   #for(i in 1:n){index[i]<- length(time_values[time_values==tuniq[i]&delta_values==1])+1}
   #for(i in 1:n){index[i]<- length(time_values[time_values<tuniq[i]])+1}
-  for(i in 1:length(data_times)){index[[i]] <- which(time_values<data_times[i])+1}
+  for(i in 1:length(data_times)){index[[i]] <-  which(!(time_values<data_times[i] & delta_values==0)&!(time_values<=data_times[i] & delta_values==1))}
   
   temp1 <- c(exp(data_features%*%beta.vect))
-  temp2 <- rep(0,length(data_times))
-  sum_matrix <- matrix(0,length(data_times),n_features)
-  sum_array <- array(0,c(length(data_times),n_features,n_features))
+  ebz <- rep(0,length(data_times))
+  zebz <- matrix(0,length(data_times),n_features)
+  zzebz <- array(0,c(length(data_times),n_features,n_features))
   for(i in 1:length(data_times))
   {
-	  temp2[i] <- sum(temp1[index[[i]]])
-	  sum_matrix[i,] <- colSums((data_features*temp1)[index[[i]]])
-	  sum_array[i,,] <- colsums((zz*temp1)[index[[i]]],dims=1)
+	  ind <- !(time_values<data_times[i] & delta_values==0) & !(time_values<=data_times[i] & delta_values==1)
+	  ebz[i] <- sum(temp1[ind])
+	  if(sum(ind)==1){
+	  zebz[i,] <- (data_features*temp1)[ind,]
+	  zzebz[i,,] <- (zz*temp1)[ind,,]
+	  } else {
+          zebz[i,] <- colSums((data_features*temp1)[ind,])
+	  zzebz[i,,] <- colsums((zz*temp1)[ind,,],dims=1)
+          }
   }
   #temp2 <- rev(cumsum(rev(temp1)))
   #temp2 <- temp2[index]
@@ -80,6 +82,6 @@ coxphDS3 <- function (data, survival_time, survival_event, terms, beta.vect, dat
   #sum_matrix <- matrix(0,length(data_times),n_features)
   #sum_array <- array(0,c(length(data_times),n_features,n_features))
   
-  return(list(ebz=temp2, zebz = sum_matrix, zzebz = sum_array))
+  return(list(ebz=ebz, zebz = zebz, zzebz = zzebz))
 }
 #coxphDS3
